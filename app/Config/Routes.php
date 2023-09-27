@@ -12,6 +12,7 @@ $routes->get('/strukturdesa', 'StrukturDesa::index');
 
 service('auth')->routes($routes, ['except' => ['login', 'register']]);
 $routes->get('login', 'Auth\LoginController::loginView');
+$routes->post('login', 'Auth\LoginController::loginAction');
 $routes->get('register', 'Auth\RegisterController::registerView');
 $routes->post('register', 'Auth\RegisterController::registerAction');
 
