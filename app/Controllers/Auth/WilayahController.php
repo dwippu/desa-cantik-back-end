@@ -4,7 +4,7 @@ namespace App\Controllers\Auth;
 
 use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Shield\Models\GroupModel;
-use app\Models\WilayahModel;
+use App\Models\WilayahModel;
 
 /**
  * Class WilayahController
@@ -14,7 +14,7 @@ use app\Models\WilayahModel;
  * - addWilayah => untuk mengatur wilayah kerja bagi pengguna baru
  * - editWilayah => mengedit wilayah kerja untuk user yang sudah ada
  */
-class WilayahController
+class WilayahController 
 {
     public function addWilayah(User $user, String $wilayah)
     {
