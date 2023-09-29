@@ -60,14 +60,8 @@ class RegisterController extends BaseController
      */
     public function registerView()
     {
-        if (auth()->loggedIn()) {
-            return redirect()->to(config('Auth')->registerRedirect());
-        }
-
-        // Check if registration is allowed
-        // if (! setting('Auth.allowRegistration')) {
-        //     return redirect()->back()->withInput()
-        //         ->with('error', lang('Auth.registerDisabled'));
+        // if (auth()->loggedIn()) {
+        //     return redirect()->to(config('Auth')->registerRedirect());
         // }
 
         /** @var Session $authenticator */
@@ -86,14 +80,8 @@ class RegisterController extends BaseController
      */
     public function registerAction(): RedirectResponse
     {
-        if (auth()->loggedIn()) {
-            return redirect()->to(config('Auth')->registerRedirect());
-        }
-
-        // // Check if registration is allowed
-        // if (! setting('Auth.allowRegistration')) {
-        //     return redirect()->back()->withInput()
-        //         ->with('error', lang('Auth.registerDisabled'));
+        // if (auth()->loggedIn()) {
+        //     return redirect()->to(config('Auth')->registerRedirect());
         // }
 
         $users = $this->getUserProvider();
@@ -126,29 +114,14 @@ class RegisterController extends BaseController
         $user = $users->findById($users->getInsertID());
 
         // Add to default group
-        $user->addGroup('superadmin');
+        $role = $this->request->getPost()['role'];
+        $user->addGroup($role);
         $this->setUserWilayah($user, $this->request->getPost()['kode_desa']);
 
         Events::trigger('register', $user);
 
-        /** @var Session $authenticator */
-        $authenticator = auth('session')->getAuthenticator();
-
-        $authenticator->startLogin($user);
-
-        // If an action has been defined for register, start it up.
-        $hasAction = $authenticator->startUpAction('register', $user);
-        if ($hasAction) {
-            return redirect()->to('auth/a/show');
-        }
-
-        // Set the user active
-        $user->activate();
-
-        $authenticator->completeLogin($user);
-
         // Success!
-        return redirect()->to(config('Auth')->registerRedirect())
+        return redirect()->to(base_url().'register')
             ->with('message', lang('Auth.registerSuccess'));
     }
 
