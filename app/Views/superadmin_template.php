@@ -7,6 +7,9 @@
   <title>Desa Cantik - Jawa Barat</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/Logo.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
+
+      <!-- Data Tables Stylesheet -->
+      <link href="../assets/css/datatables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -22,7 +25,7 @@
               <img src="../assets/images/logos/Logo.png" alt="logo" width="100%" height="50px" >
               <div class="pt-2 px-2">
                   <p  style="border:0; border-left: 1px; border-color:black; border-style:solid; padding-left:10%; color:#000;">
-                    <b>PORTAL</b><br>Desa Cantik
+                    <b>Manajemen Akun</b><br>Desa Cantik
                   </p>
               </div>
           </a>
@@ -30,17 +33,6 @@
             <i class="ti ti-x fs-8"></i>
           </div>
         </div>
-        
-        <!-- Contoh filter role untuk view -->
-        <div class="nav-small-cap">
-          <?php if (auth()->user()->inGroup('operator')): ?>
-            <span class="hide-menu">Role: Operator</span>
-          <?php endif?>
-          <?php if (auth()->user()->inGroup('verifikator')): ?>
-            <span class="hide-menu">Role: Verifikator</span>
-          <?php endif?>
-        </div>
-
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
           <ul id="sidebarnav">
@@ -61,90 +53,22 @@
               <span class="hide-menu">PROFILE</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link <?php if (strcmp(uri_string(), "profiledesa") == 0) echo 'active' ?>" href="/profiledesa" aria-expanded="false">
+              <a class="sidebar-link <?php if (strcmp(uri_string(), "users") == 0) echo 'active' ?>" href="/users" aria-expanded="false">
                 <span>
                   <i class="ti ti-user"></i>
                 </span>
-                <span class="hide-menu">Profile Desa</span>
+                <span class="hide-menu">Daftar Akun</span>
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link <?php if (strcmp(uri_string(), "strukturdesa") == 0) echo 'active' ?>" href="/strukturdesa" aria-expanded="false">
+              <a class="sidebar-link <?php if (strcmp(uri_string(), "register") == 0) echo 'active' ?>" href="/register" aria-expanded="false">
                 <span>
                   <i class="ti ti-list"></i>
                 </span>
-                <span class="hide-menu">Struktur Desa</span>
+                <span class="hide-menu">Tambah Akun</span>
               </a>
             </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Data & INFORMASI</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-upload"></i>
-                </span>
-                <span class="hide-menu">Upload</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-pencil"></i>
-                </span>
-                <span class="hide-menu">Edit</span>
-              </a>
-            </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Surat Keputusan</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-article"></i>
-                </span>
-                <span class="hide-menu">SK Desa Cantik</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-file-description"></i>
-                </span>
-                <span class="hide-menu">SK Pembina Desa</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-receipt"></i>
-                </span>
-                <span class="hide-menu">SK Agen Statistik</span>
-              </a>
-            </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">LAPORAN</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-clipboard"></i>
-                </span>
-                <span class="hide-menu">Laporan Pembinaan</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-cards"></i>
-                </span>
-                <span class="hide-menu">Laporan Bulanan</span>
-              </a>
-            </li>
-          </ul>
+            
         </nav>
         <!-- End Sidebar navigation -->
       </div>
@@ -210,6 +134,10 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
+
+    <!-- Data Tables Javascript -->
+    <script src="../assets/js/datatables/datatables.min.js"></script>
+    <script src="../assets/js/datatables/custom.js"></script>
 </body>
 
 </html>

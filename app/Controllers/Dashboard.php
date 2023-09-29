@@ -6,6 +6,11 @@ class Dashboard extends BaseController
 {
     public function index(): string
     {
-        return view('dashboard');
+        if (auth()->user()->inGroup('superadmin')){
+            return view('superadmin_dashboard');
+        }
+        else{
+            return view('dashboard');
+        }
     }
 }
