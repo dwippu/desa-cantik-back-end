@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
-use App\Controllers\Auth\WilayahController;
+use App\Controllers\Auth\WilayahUserController;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -186,7 +186,7 @@ class RegisterController extends BaseController
     }
 
     protected function setUserWilayah(User $user, string $kode_wilayah){
-        $wil = new WilayahController();
+        $wil = new WilayahUserController();
         $wil->addWilayah($user, $kode_wilayah);
     }
 

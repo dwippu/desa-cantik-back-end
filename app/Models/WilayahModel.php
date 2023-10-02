@@ -2,22 +2,15 @@
 
 namespace App\Models;
 
-use CodeIgniter\Shield\Models\GroupModel;
+use CodeIgniter\Model;
 
-class WilayahModel extends GroupModel
+class WilayahModel extends Model
 {
-    /**
-     * @param String|int $id dari user yang akan diubah wilayahnya
-     * @param String $wilayah kode desa yang yang baru
-     */
-    public function setWilayah($id, String $wilayah)
-    {
-        $usergroup = $this->where('user_id', $id)->findAll();
-        $this->update($usergroup[0]['id'], ['kode_desa' => $wilayah]);
-    }
-    
-    public function getWilayah($id){
-        $usergroup = $this->where('user_id', $id)->findAll();
-        return $usergroup[0]['kode_desa'];
-    }
+    protected $table            = 'wilayah';
+    protected $primaryKey       = 'kode_desa';
+    protected $useAutoIncrement = false;
+    protected $returnType       = 'array';
+    // protected $useSoftDeletes   = false;
+    // protected $protectFields    = true;
+    protected $allowedFields    = ['kode_desa', 'prov', 'nama_prov', 'kab', 'nama_kab', 'kec', 'nama_kec', 'desa', 'nama_desa'];
 }
