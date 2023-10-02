@@ -9,9 +9,9 @@ class ProfileDesa extends BaseController
 {
     public function index()
     {
-        $id = auth()->getUser()->id;
         $user = new WilayahUserModel();
         $wilayah = new WilayahModel();
+        $id = auth()->getUser()->id;
         $info_desa = $wilayah->find($user->getWilayah($id));
 
         $profil = new ProfilDesaModel();
@@ -23,6 +23,23 @@ class ProfileDesa extends BaseController
 
     public function pengajuan()
     {
+        $wilayah = new WilayahModel();
+        $user = new WilayahUserModel();
+        $profil_desa = new ProfilDesaModel();
+        $info_desa = $wilayah->find($user->getWilayah(auth()->getUser()->id));
+        $profil_desa = $profil->nowProfil(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa']);
+        $data = ['info_desa' => $info_desa, 'profil_desa'=>$profil_desa];
+
+        $profil->insert([
+            'kode_desa'=> ($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'],
+            'alamat' => $this->request->getPost('alamat'), 
+            'email' => $this->request->getPost('email'), 
+            'telp' => $this->request->getPost('telp'), 
+            'info_umum' => $this->request->getPost('info'), 
+            'html_tag'=> $this->request->getPost('maps'),
+            'approval'=> 'diajukan'
+        ]);
         
+        return view('dashboard');
     }
 }

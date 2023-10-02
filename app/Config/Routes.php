@@ -10,6 +10,7 @@ $routes->group('',['filter' => 'session'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
     $routes->group('',['filter' => 'group:operator,verifikator'], function ($routes) {
         $routes->get('/profiledesa', 'ProfileDesa::index');
+        $routes->post('/profildesa', 'ProfileDesa::pengajuan');
         $routes->get('/strukturdesa', 'StrukturDesa::index');
     });
     $routes->group('',['filter' => 'group:superadmin'], function ($routes) {

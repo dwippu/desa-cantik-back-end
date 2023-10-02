@@ -5,9 +5,10 @@
         <div class="card" style="background-color:#5D87FF;">
         <div class="card-body">
             <h2 class="fw-semibold mb-4 text-bg-primary">Profile Desa</h2>
+
             <div class="card">
             <div class="card-body">
-                <form>
+                <form action="/profildesa" method="post">
                     <div class="mb-3">
                         <label for="prov" class="form-label">Provinsi</label>
                         <input type="text" id="prov" name="prov" class="form-control" value="<?= $info_desa['nama_prov']?>" disabled>
@@ -44,12 +45,12 @@
                         <label for="maps" class="form-label">HTML Maps</label></p>
                         <textarea id="maps" name="maps" rows="4" cols="50" class="form-control" required><?= $profil_desa['html_tag'] ?></textarea>
                     </div>
-
                     
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </form>
             </div>
             </div>
+
         </div>
         </div>
     </div>
