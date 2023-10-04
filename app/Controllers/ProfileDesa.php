@@ -1,45 +1,60 @@
 <?php
 
 namespace App\Controllers;
+
+use App\Controllers\BaseController;
+use App\Models\ProfilDesaModel;
 use App\Models\WilayahModel;
 use App\Models\WilayahUserModel;
-use App\Models\ProfilDesaModel;
 
 class ProfileDesa extends BaseController
 {
     public function index()
     {
-        $user = new WilayahUserModel();
-        $wilayah = new WilayahModel();
-        $id = auth()->getUser()->id;
-        $info_desa = $wilayah->find($user->getWilayah($id));
-
         $profil = new ProfilDesaModel();
-        $profil_desa = $profil->nowProfil($info_desa['kode_desa']);
+        $user = new WilayahUserModel();
+        $kode_desa = $user->getWilayah(auth()->getUser()->id);
+        $profil_desa = $profil->getRiwayat($kode_desa);
 
-        $data = ['info_desa' => $info_desa, 'profil_desa'=>$profil_desa];
-        return view('profile_desa', $data);
+        $data = ['profil_desa'=>$profil_desa];
+        return view('riwayat_profile_desa', $data);
     }
 
-    public function pengajuan()
-    {
-        $wilayah = new WilayahModel();
-        $user = new WilayahUserModel();
+    public function delete($id){
         $profil = new ProfilDesaModel();
-        $info_desa = $wilayah->find($user->getWilayah(auth()->getUser()->id));
-        $profil_desa = $profil->nowProfil(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa']);
-        $data = ['info_desa' => $info_desa, 'profil_desa'=>$profil_desa];
+        $profil->delete($id);
+        return redirect('profiledesa');
+    }
 
-        $profil->insert([
-            'kode_desa'=> ($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'],
+    public function profile($id){
+        $profil = new ProfilDesaModel();
+        $wilayah = new WilayahModel();
+        $pengajuan = $profil->find($id);
+        $info_desa = $wilayah->find($pengajuan['kode_desa']);
+        $data = ['info_desa' => $info_desa, 'pengajuan'=>$pengajuan];
+        return $this->response->setJSON($data);
+    }
+
+    public function setujui($id){
+        $profil = new ProfilDesaModel();
+        $profil->update($id,[
             'alamat' => $this->request->getPost('alamat'), 
             'email' => $this->request->getPost('email'), 
             'telp' => $this->request->getPost('telp'), 
             'info_umum' => $this->request->getPost('info'), 
             'html_tag'=> $this->request->getPost('maps'),
-            'approval'=> 'diajukan'
+            'approval'=>'disetujui',
+            'tanggal_konfirmasi' => date('Y-m-d H:i:s')
         ]);
-        
-        return view('dashboard');
+        return redirect('profiledesa');
+    }
+
+    public function tolak($id){
+        $profil = new ProfilDesaModel();
+        $profil->update($id,[
+            'approval'=>'ditolak',
+            'tanggal_konfirmasi' => date('Y-m-d H:i:s')
+        ]);
+        return redirect('profiledesa');
     }
 }

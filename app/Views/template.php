@@ -7,6 +7,9 @@
   <title>Desa Cantik - Jawa Barat</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/Logo.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
+
+  <!-- Data Tables Stylesheet -->
+  <link href="../assets/css/datatables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,16 +33,6 @@
             <i class="ti ti-x fs-8"></i>
           </div>
         </div>
-        
-        <!-- Contoh filter role untuk view -->
-        <div class="nav-small-cap">
-          <?php if (auth()->user()->inGroup('operator')): ?>
-            <span class="hide-menu">Role: Operator</span>
-          <?php endif?>
-          <?php if (auth()->user()->inGroup('verifikator')): ?>
-            <span class="hide-menu">Role: Verifikator</span>
-          <?php endif?>
-        </div>
 
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
@@ -61,7 +54,7 @@
               <span class="hide-menu">PROFILE</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link <?php if (strcmp(uri_string(), "profiledesa") == 0) echo 'active' ?>" href="/profiledesa" aria-expanded="false">
+              <a class="sidebar-link <?php if (preg_match("/profiledesa$/", uri_string()) == 1) echo 'active' ?>" href="/profiledesa" aria-expanded="false">
                 <span>
                   <i class="ti ti-user"></i>
                 </span>
@@ -117,7 +110,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+              <a class="sidebar-link <?php if (preg_match("/skagen$/", uri_string()) == 1) echo 'active' ?>" href="/skagen" aria-expanded="false">
                 <span>
                   <i class="ti ti-receipt"></i>
                 </span>
@@ -174,15 +167,16 @@
                   <div class="message-body">
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
+                      <p class="mb-0 fs-3"><?= auth()->user()->username ?></p>
                     </a>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
+                      <?php if (auth()->user()->inGroup('operator')){
+                          echo '<p class="mb-0 fs-3">OPERATOR</p>';
+                        }elseif (auth()->user()->inGroup('verifikator')){
+                          echo '<p class="mb-0 fs-3">VERIFIKATOR</p>';
+                        };
+                      ?>
                     </a>
                     <a href="./logout" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
@@ -210,6 +204,10 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
+  <!-- Data Tables Javascript -->
+  <script src="../assets/js/datatables/datatables.min.js"></script>
+  <script src="../assets/js/datatables/custom.js"></script>
+
 </body>
 
 </html>
