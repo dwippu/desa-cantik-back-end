@@ -72,7 +72,7 @@ class RegisterController extends BaseController
             return redirect()->route('auth-action-show');
         }
 
-        return $this->view('register');
+        return $this->view('superadmin_pages/register');
     }
 
     /**
@@ -93,6 +93,12 @@ class RegisterController extends BaseController
         if (! $this->validateData($this->request->getPost(), $rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
+
+        if (! in_array($this->request->getPost()['role'], ['operator', 'verifikator'])){
+            return redirect()->back()->withInput()->with('errors', 'Role tidak terdaftar');
+        }
+
+
 
         // Save the user
         $allowedPostFields = array_keys($rules);
@@ -182,6 +188,14 @@ class RegisterController extends BaseController
                 'label' => 'Auth.passwordConfirm',
                 'rules' => 'required|matches[password]',
             ],
+            'role' => [
+                'label' => 'role',
+                'rules' => 'required',
+            ],
+            'kode_desa' => [
+                'label' => 'role',
+                'rules' => 'required|max_length[10]|min_length[10]',
+            ]
         ];
     }
 

@@ -5,6 +5,10 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\UsersModel;
 
+/**
+ * Controller untuk mengatur user
+ * Hanya dapat diakses oleh akun dengan role superadmin
+ */
 class Users extends BaseController
 {
     protected UsersModel $model;
@@ -14,7 +18,7 @@ class Users extends BaseController
         $this->model = new UsersModel();
         $list = $this->model->getAllUser();
         $data = ['list' => $list];
-        return view('list_user', $data);
+        return view('superadmin_pages/list_user', $data);
     }
 
     protected function getuser(){

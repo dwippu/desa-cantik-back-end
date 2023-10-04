@@ -1,4 +1,4 @@
-<?= $this->extend('superadmin_template'); ?>
+<?= $this->extend('superadmin_pages/superadmin_template'); ?>
 
 <?= $this->Section('content'); ?>
 

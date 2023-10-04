@@ -3,7 +3,6 @@
 namespace App\Controllers\Auth;
 
 use CodeIgniter\Shield\Entities\User;
-use CodeIgniter\Shield\Models\GroupModel;
 use App\Models\WilayahUserModel;
 
 /**

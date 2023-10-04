@@ -25,7 +25,7 @@ class ProfileDesa extends BaseController
     {
         $wilayah = new WilayahModel();
         $user = new WilayahUserModel();
-        $profil_desa = new ProfilDesaModel();
+        $profil = new ProfilDesaModel();
         $info_desa = $wilayah->find($user->getWilayah(auth()->getUser()->id));
         $profil_desa = $profil->nowProfil(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa']);
         $data = ['info_desa' => $info_desa, 'profil_desa'=>$profil_desa];

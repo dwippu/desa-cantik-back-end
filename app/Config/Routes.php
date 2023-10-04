@@ -17,6 +17,9 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->get('/users', 'Users::index');
         $routes->get('register', 'Auth\RegisterController::registerView');
         $routes->post('register', 'Auth\RegisterController::registerAction');
+        $routes->get('/listdesa', 'ListDesa::index');
+        $routes->get('/listdesa/tambah', 'ListDesa::tambahview');
+        $routes->post('/listdesa/tambah', 'ListDesa::tambahaction');
     });
 });
 
