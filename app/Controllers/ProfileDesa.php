@@ -14,8 +14,13 @@ class ProfileDesa extends BaseController
         $profil = new ProfilDesaModel();
         $user = new WilayahUserModel();
         $kode_desa = $user->getWilayah(auth()->getUser()->id);
-        $profil_desa = $profil->getRiwayat($kode_desa);
-
+        if(auth()->user()->inGroup('adminkab')){
+            $kode_kab = substr($kode_desa,0,4);
+            $profil_desa = $profil->getRiwayatByKab($kode_kab);
+        }
+        else{
+            $profil_desa = $profil->getRiwayat($kode_desa);
+        }
         $data = ['profil_desa'=>$profil_desa];
         return view('riwayat_profile_desa', $data);
     }

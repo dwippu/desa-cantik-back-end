@@ -58,8 +58,9 @@
                         <div class="mb-2">
                             <select class="form-select" name="role" id="role" required>
                                 <option selected disabled value="">Pilih Role</option>
-                                <option value="operator">Operator</option>
-                                <option value="verifikator">Verifikator</option>
+                                <option value="adminkab">Admin Kabupaten/Kota</option>
+                                <option value="operator">Operator Desa</option>
+                                <option value="verifikator">Verifikator Desa</option>
                             </select>
                         </div>    
 

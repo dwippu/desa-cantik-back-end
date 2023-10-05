@@ -36,12 +36,16 @@ class AuthGroups extends ShieldAuthGroups
             'title'       => 'Super Admin',
             'description' => 'Complete control of the site.',
         ],
+        'adminkab' => [
+            'title'       => 'Admin Kab',
+            'description' => 'Complete control of the site.',
+        ],
         'verifikator' => [
-            'title'       => 'Admin',
+            'title'       => 'Verifikator',
             'description' => 'Day to day administrators of the site.',
         ],
         'operator' => [
-            'title'       => 'User',
+            'title'       => 'Operator',
             'description' => 'General users of the site. Often customers.',
         ],
     ];
@@ -74,6 +78,11 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $matrix = [
         'superadmin' => [
+            'admin.*',
+            'users.*',
+            'beta.*',
+        ],
+        'adminkab' => [
             'admin.*',
             'users.*',
             'beta.*',

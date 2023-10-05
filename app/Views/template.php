@@ -93,14 +93,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Surat Keputusan</span>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
-                <span>
-                  <i class="ti ti-article"></i>
-                </span>
-                <span class="hide-menu">SK Desa Cantik</span>
-              </a>
-            </li>
+            <?php if(auth()->user()->inGroup('adminkab')): ?>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
                 <span>
@@ -109,6 +102,8 @@
                 <span class="hide-menu">SK Pembina Desa</span>
               </a>
             </li>
+            <?php endif ?>
+            <?php if(auth()->user()->inGroup('operator', 'verifikator')): ?>
             <li class="sidebar-item">
               <a class="sidebar-link <?php if (preg_match("/skagen$/", uri_string()) == 1) echo 'active' ?>" href="/skagen" aria-expanded="false">
                 <span>
@@ -117,6 +112,7 @@
                 <span class="hide-menu">SK Agen Statistik</span>
               </a>
             </li>
+            <?php endif ?>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">LAPORAN</span>
@@ -175,6 +171,8 @@
                           echo '<p class="mb-0 fs-3">OPERATOR</p>';
                         }elseif (auth()->user()->inGroup('verifikator')){
                           echo '<p class="mb-0 fs-3">VERIFIKATOR</p>';
+                        }elseif (auth()->user()->inGroup('adminkab')){
+                          echo '<p class="mb-0 fs-3">Admin Kabupaten</p>';
                         };
                       ?>
                     </a>

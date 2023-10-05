@@ -94,7 +94,7 @@ class RegisterController extends BaseController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        if (! in_array($this->request->getPost()['role'], ['operator', 'verifikator'])){
+        if (! in_array($this->request->getPost()['role'], ['operator', 'verifikator', 'adminkab'])){
             return redirect()->back()->withInput()->with('errors', 'Role tidak terdaftar');
         }
 
