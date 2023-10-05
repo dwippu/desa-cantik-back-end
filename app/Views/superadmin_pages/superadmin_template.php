@@ -50,7 +50,7 @@
             </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">PROFILE</span>
+              <span class="hide-menu">AKUN</span>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link <?php if (strcmp(uri_string(), "users") == 0) echo 'active' ?>" href="/users" aria-expanded="false">
@@ -68,7 +68,31 @@
                 <span class="hide-menu">Tambah Akun</span>
               </a>
             </li>
-            
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">DESA</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/listdesa" aria-expanded="false">
+                <span>
+                  <i class="ti ti-home"></i>
+                </span>
+                <span class="hide-menu">Daftar Desa Cantik</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Surat Keputusan</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="/skdescan" aria-expanded="false">
+                <span>
+                  <i class="ti ti-article"></i>
+                </span>
+                <span class="hide-menu">SK Desa Cantik</span>
+              </a>
+            </li>
+          </ul>
         </nav>
         <!-- End Sidebar navigation -->
       </div>

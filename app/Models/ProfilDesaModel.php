@@ -30,4 +30,12 @@ class ProfilDesaModel extends Model
         return $data;
     }
 
+    public function getRiwayatByKab($kode_kab){
+        $data = $this->builder()
+            ->select(['profil_desa.id', 'profil_desa.user_id', 'users.username', 'kode_desa', 'approval', 'tanggal_pengajuan', 'tanggal_konfirmasi'])
+            ->join('users', 'profil_desa.user_id=users.id')->like('kode_desa', $kode_kab, 'after')
+            ->get()->getResultArray();
+        return $data;
+    }
+
 }

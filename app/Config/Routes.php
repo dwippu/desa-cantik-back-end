@@ -8,7 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->group('',['filter' => 'session'], function ($routes) {
     $routes->get('/', 'Dashboard::index');
-    $routes->group('',['filter' => 'group:operator,verifikator'], function ($routes) {
+    $routes->group('',['filter' => 'group:operator,verifikator, adminkab'], function ($routes) {
         $routes->get('/profiledesa', 'ProfileDesa::index');
         $routes->delete('/profiledesa/(:num)', 'ProfileDesa::delete/$1');
         $routes->get('/profiledesa/(:any)', 'ProfileDesa::profile/$1');
@@ -24,10 +24,16 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->post('/setujuiprofile/(:any)', 'ProfileDesa::setujui/$1');
         $routes->post('/tolakprofile/(:any)', 'ProfileDesa::tolak/$1');
     });
-    $routes->group('',['filter' => 'group:superadmin'], function ($routes) {
+    $routes->group('',['filter' => 'group:adminkab,superadmin'], function ($routes) {
         $routes->get('/users', 'Users::index');
+    });
+    $routes->group('',['filter' => 'group:superadmin'], function ($routes) {
         $routes->get('register', 'Auth\RegisterController::registerView');
         $routes->post('register', 'Auth\RegisterController::registerAction');
+        $routes->get('/listdesa', 'ListDesa::index');
+        $routes->get('/listdesa/tambah', 'ListDesa::tambahview');
+        $routes->post('/listdesa/tambah', 'ListDesa::tambahaction');
+        $routes->get('/skdescan', 'SkDescan::index');
     });
 });
 
