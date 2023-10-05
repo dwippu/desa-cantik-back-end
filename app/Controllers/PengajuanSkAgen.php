@@ -46,12 +46,16 @@ class PengajuanSkAgen extends BaseController
         $wilayah = new WilayahModel();
         $user = new WilayahUserModel();
         $sk = new SkAgenModel();
+        $file_sk = $this->request->getFile('file_sk');
+        $file_sk->move('SK Agen');
+        $nama_file = $file_sk->getName();
+
         $sk->save([
             'user_id' => auth()->getUser()->id,
             'kode_desa'=> ($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'],
             'nomor_sk' => $this->request->getVar('no_sk'),
             'tanggal_sk' => $this->request->getVar('tanggal_sk'),
-            'file_sk' => 'gfgfh',
+            'file' => $nama_file,
             'approval' => 'diajukan',
             'tanggal_pengajuan' => date('Y-m-d H:i:s')
         ]);
