@@ -26,6 +26,17 @@ class UsersModel extends Model
         return $data;
     }
 
+    public function detailUser($id){
+        $data = $this->builder()
+        ->select(['auth_groups_users.user_id','username','secret','group','auth_groups_users.kode_desa','last_active', 'nama_desa'])
+        ->where('auth_groups_users.user_id',$id)
+        ->join('auth_groups_users', 'users.id = auth_groups_users.user_id')
+        ->join('auth_identities', 'users.id=auth_identities.user_id')
+        ->join('wilayah', 'auth_groups_users.kode_desa=wilayah.kode_desa', 'LEFT')
+        ->get()->getResultArray();
+    return $data;
+    }
+
     public function deleteUser(String $id){
         
     }

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\UsersModel;
 use App\Models\WilayahUserModel;
+use App\Models\WilayahModel;
 
 /**
  * Controller untuk mengatur user
@@ -35,12 +36,34 @@ class Users extends BaseController
         return view('list_user_kab', $data);
     }
 
-    protected function getuser(){
+    public function detail($id){
+        if (! auth()->loggedIn()) {
+            return redirect()->back();
+        }
 
+        $this->model = new UsersModel();
+        $user = $this->model->detailUser($id)[0];
+        
+        // Nama Kabupaten
+        $wil = new WilayahModel;
+        $wil = $wil->namaKab(substr($user['kode_desa'],2,2));
+        $user['nama_kab'] = $wil ? $wil[0]['nama_kab']:null;
+        
+        if(auth()->user()->inGroup('adminkab')){
+            $wilayah = new WilayahUserModel();
+            $kode_kab1 = substr($wilayah->getWilayah(auth()->user()->id),2,2);
+            $kode_kab2 = substr($user['kode_desa'],2,2);
+            if($kode_kab1 == $kode_kab2){
+                return $this->response->setJSON($user);
+            }
+            return $this->response->setJSON(null);
+        };
+
+        return $this->response->setJSON($user);
     }
 
     protected function deleteuser(){
-
+        helper('oldpassword');
     }
 
     protected function updateuser(){

@@ -1,4 +1,4 @@
-<?= $this->extend('superadmin_pages/superadmin_template'); ?>
+<?= $this->extend('template'); ?>
 
 <?= $this->Section('content'); ?>
 
@@ -58,27 +58,21 @@
                         <div class="mb-4">
                             <select class="form-select" name="role" id="role" required>
                                 <option selected disabled value="">Pilih Role</option>
-                                <option value="adminkab">Admin Kabupaten/Kota</option>
                                 <option value="operator">Operator Desa</option>
                                 <option value="verifikator">Verifikator Desa</option>
                             </select>
                         </div>    
 
                         <!-- Kode Desa -->
-                        <div class="mb-2">
-                            <select class="form-select" name="kode_kab" id="pilih_kabupaten" required hidden>
-                                <option selected disabled value=''>-- Pilih Kabupaten --</option>
-                                <?php foreach ($kab as $i): ?>
-                                    <option value="<?= $i['kab'] ?>"><?= $i['nama_kab'] ?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
-                        <input id="input_hidden" type="hidden" name="kode_desa" value="" disabled>
                         <div class="mb-5">
-                        <select class="form-select" name="kode_desa" id="pilih_desa" disabled hidden>
-                                <option selected disabled value=''>-- Pilih Desa --</option>
+                            <select class="form-select" name="kode_desa" id="kode_desa" required>
+                                <option selected disabled value="">Pilih Desa</option>
+                                <?php foreach ($list as $list): ?>
+                                    <option value="<?= $list['kode_desa'] ?>"><?= $list['nama_desa'] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
+
 
                         <div class="d-grid col-12 col-md-8 mx-auto m-3">
                             <button type="submit" class="btn btn-primary btn-block">Tambahkan Akun</button>

@@ -23,6 +23,6 @@ class WilayahUserController
 
     public function getWilayah(User $user){
         $wil = new WilayahUserModel();
-        return $wil->getWilayah($user);
+        return $wil->getWilayah($user->id);
     }
 }

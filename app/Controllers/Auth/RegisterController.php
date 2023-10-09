@@ -18,6 +18,7 @@ use CodeIgniter\Shield\Exceptions\ValidationException;
 use CodeIgniter\Shield\Models\UserModel;
 use CodeIgniter\Shield\Traits\Viewable;
 use Psr\Log\LoggerInterface;
+use App\Models\WilayahModel;
 
 /**
  * Class RegisterController
@@ -60,10 +61,6 @@ class RegisterController extends BaseController
      */
     public function registerView()
     {
-        // if (auth()->loggedIn()) {
-        //     return redirect()->to(config('Auth')->registerRedirect());
-        // }
-
         /** @var Session $authenticator */
         $authenticator = auth('session')->getAuthenticator();
 
@@ -72,7 +69,16 @@ class RegisterController extends BaseController
             return redirect()->route('auth-action-show');
         }
 
-        return $this->view('superadmin_pages/register');
+        $desa = new WilayahModel();
+
+        if (auth()->user()->inGroup('superadmin')){
+            return $this->view('superadmin_pages/register', ['kab' => $desa->distinctKab()]);
+        }
+        
+        $wilayah = new WilayahUserController();
+        $kode_kab = $wilayah->getWilayah(auth()->user());
+        $kode_kab = substr($kode_kab,2,2);
+        return $this->view('register_kab', ['list' => $desa->findDescanByKab($kode_kab)]);
     }
 
     /**
@@ -80,9 +86,7 @@ class RegisterController extends BaseController
      */
     public function registerAction(): RedirectResponse
     {
-        // if (auth()->loggedIn()) {
-        //     return redirect()->to(config('Auth')->registerRedirect());
-        // }
+        $wilayah = new WilayahUserController();
 
         $users = $this->getUserProvider();
 
@@ -98,8 +102,23 @@ class RegisterController extends BaseController
             return redirect()->back()->withInput()->with('errors', 'Role tidak terdaftar');
         }
 
+        if (auth()->user()->inGroup('adminkab')){
+            if($this->request->getPost()['role'] == 'adminkab'){
+                return redirect()->back()->withInput()->with('errors', 'Role tidak terdaftar');
+            }
+            $kode_kab = $wilayah->getWilayah(auth()->user());
+            if (substr($kode_kab,0,4) != substr($this->request->getPost()['kode_desa'],0,4)){
+                return redirect()->back()->withInput()->with('errors', 'Desa tidak ditemukan');
+            }
+        }
 
-
+        $desa = new WilayahModel();
+        if (! $desa->find($this->request->getPost()['kode_desa'])){
+            if (substr($this->request->getPost()['kode_desa'],4,6) != '000000'){
+                return redirect()->back()->withInput()->with('errors', 'Desa tidak ditemukan');
+            }
+        };
+        
         // Save the user
         $allowedPostFields = array_keys($rules);
         $user              = $this->getUserEntity();
@@ -159,10 +178,6 @@ class RegisterController extends BaseController
      */
     protected function getValidationRules(): array
     {
-        $registrationUsernameRules = array_merge(
-            config('AuthSession')->usernameValidationRules,
-            [sprintf('is_unique[%s.username]', $this->tables['users'])]
-        );
         $registrationEmailRules = array_merge(
             config('AuthSession')->emailValidationRules,
             [sprintf('is_unique[%s.secret]', $this->tables['identities'])]
@@ -171,7 +186,10 @@ class RegisterController extends BaseController
         return setting('Validation.registration') ?? [
             'username' => [
                 'label' => 'Auth.username',
-                'rules' => $registrationUsernameRules,
+                'rules' => 'alpha_space|max_length[100]|required',
+                'errors' =>
+                    ['alpha_space' => 'Nama hanya boleh terdiri dari huruf dan spasi',
+                    'max_length' => 'Panjang nama tidak boleh lebih dari 100 karakter']
             ],
             'email' => [
                 'label' => 'Auth.email',

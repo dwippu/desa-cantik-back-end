@@ -18,7 +18,6 @@ $(document).ready(function(){
     rpdesa.buttons().container()
     .appendTo('#rpdesa'); 
 
-
     // Modal
     $(document).on('click', '#btnCancelProfile', function(){
         var id = $(this).attr('data-id');
@@ -29,8 +28,10 @@ $(document).ready(function(){
     $('.closeModal').click(function(e) {
         $('#modalCancel').modal('hide');
         $('#modalView').modal('hide');
+        $('#modalDelete').modal('hide');
+        $('#modalReset').modal('hide');
+        tutupModal();
     });
-
 
     $(document).on('click', '#btnViewProfile', function(){
         var id = $(this).attr('data-id');
@@ -66,4 +67,103 @@ $(document).ready(function(){
             $('form').attr('action', '/tolakprofile/'+id);
         });
     });
+
+    $('#role').change(function(){
+        let role = $('#role :selected').val();
+        let idkab = $('#pilih_kabupaten :selected').val();
+        if (role == 'adminkab'){
+            $('#pilih_kabupaten').prop("hidden", false);
+            $('#pilih_desa').prop("hidden", true);
+            $('#input_hidden').val('32'+idkab+'000000');
+            $('#input_hidden').prop("disabled", false);
+        }
+        else{
+            $('#pilih_kabupaten').prop("hidden", false);
+            $('#pilih_desa').prop("hidden", false);
+            $('#input_hidden').prop("disabled", true);
+        }
+    });
+
+    $('#pilih_kabupaten').change(function(){
+        let idkab = $('#pilih_kabupaten :selected').val();
+        let role = $('#role :selected').val();
+        if (role == 'adminkab'){
+            $('#input_hidden').val('32'+idkab+'000000');
+        }
+        else{
+            $.ajax({url: "/desa/"+idkab, success: function(result){
+                $('#pilih_desa option').not(':disabled').remove();
+                for (var key in result){
+                    $('#pilih_desa').append($('<option>', {value:result[key]['kode_desa'], text:result[key]['nama_desa']}));
+                }
+                $('#pilih_desa').prop("disabled", false);
+        }})}
+    });
+
+    // List user
+    $(document).on('click', '#btnViewUser', function(){
+        var id = $(this).attr('data-id');
+        $('#modalView').modal('show');
+        $('#deletebtn').attr('data-id', id);
+        $('#resetbtn').attr('data-id', id);
+        $('#ubah_info').attr('data-id', id);
+        $.ajax({
+            method: "GET",
+            url: "/users//"+id,
+            success: function(response){ 
+                $('#kabkot').val(response['nama_kab']);
+                $('#desa').val((response['nama_desa'] == null) ? '-' : response['nama_desa']);
+                $('#kode_desa').val(response['kode_desa']);
+                $('#email').val(response['secret']);
+                $('#nama').val(response['username']);
+                $('#role').val(response['group']);
+                $('#last_active').val(response['last_active']);
+            }
+        });
+    });
+
+    function tutupModal(){
+        $('.pass-collapse').removeClass('show')
+        $('#delaction').text('Ya')
+        $('#resetaction').text('Ya')
+    };
+
+    //Delete user
+    $(document).on('click', '#deletebtn', function(){
+        $('#modalDelete').modal('show');
+        var id = $(this).attr('data-id');
+    });
+
+    $('#delaction').click(function(){
+        var isi = $(this).text();
+        var id = $('#deletebtn').attr('data-id');
+        $('.pass-collapse').addClass('show')
+        if (isi == 'Ya'){
+            $(this).text('Hapus Akun')
+        }
+        if (isi == 'Hapus Akun'){
+            $('#user_id_delete').val(id);
+            $('#form-delete-user').submit();
+        }
+    })
+
+    // Reset Password
+    $(document).on('click', '#resetbtn', function(){
+        $('#modalReset').modal('show');
+        var id = $(this).attr('data-id');
+    });
+
+
+    $('#resetaction').click(function(){
+        var isi = $(this).text();
+        var id = $('#resetbtn').attr('data-id');
+        $('.pass-collapse').addClass('show')
+        if (isi == 'Ya'){
+            $(this).text('Reset Password')
+        }
+        if (isi == 'Reset Password'){
+            $('#user_id_reset').val(id);
+            $('#form-reset-user').submit();
+        }
+    })
 });
