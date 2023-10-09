@@ -17,9 +17,10 @@ class ProfileDesa extends BaseController
         if(auth()->user()->inGroup('adminkab')){
             $kode_kab = substr($kode_desa,0,4);
             $profil_desa = $profil->getRiwayatByKab($kode_kab);
-        }
-        else{
-            $profil_desa = $profil->getRiwayat($kode_desa);
+        }elseif(auth()->user()->inGroup('verifikator')){
+            $profil_desa = $profil->getRiwayatByDesa($kode_desa);
+        }else{
+            $profil_desa = $profil->getRiwayatByOpr($kode_desa, auth()->getUser()->id);
         }
         $data = ['profil_desa'=>$profil_desa];
         return view('riwayat_profile_desa', $data);

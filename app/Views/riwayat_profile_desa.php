@@ -23,13 +23,15 @@
                         <table id="rpdesa" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Operator</th>
+                                    <th>Pemohon</th>
                                     <th>Kode Desa</th>
                                     <th>Keterangan</th>
                                     <th>Tanggal Pengajuan</th>
                                     <th>Tanggal Konfirmasi</th>
-                                    <th>Detail</th>
                                     <th>Aksi</th>
+                                    <?php if (auth()->user()->inGroup('operator')): ?>
+                                        <th>Batalkan</th>
+                                    <?php endif?> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,7 +51,9 @@
                                         <td><?=$row['tanggal_pengajuan']?></td>
                                         <td><?=$row['tanggal_konfirmasi']?></td>
                                         <td><button data-id="<?=$row['id']?>" id="btnViewProfile" class="btn btn-outline-primary rounded-pill" data-toggle="modal" data-target="#modalView"><i class="ti ti-search"></i>View</button></td>
-                                        <td><button data-id="<?=$row['id']?>" id="btnCancelProfile" class="btn btn-danger rounded-pill" data-toggle="modal" data-target="#modalCancel" <?php if ($row['tanggal_konfirmasi'] != null) echo 'disabled' ?> >Batalkan</button></td>
+                                        <?php if (auth()->user()->inGroup('operator')): ?>
+                                            <td><button data-id="<?=$row['id']?>" id="btnCancelProfile" class="btn btn-danger rounded-pill" data-toggle="modal" data-target="#modalCancel" <?php if ($row['tanggal_konfirmasi'] != null) echo 'disabled' ?> >Batalkan</button></td>
+                                        <?php endif?> 
                                     </tr>
                                 <?php endforeach;?>
                             </tbody>

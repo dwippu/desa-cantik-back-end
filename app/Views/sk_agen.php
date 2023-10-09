@@ -23,7 +23,7 @@
                         <table id="rpdesa" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Operator</th>
+                                    <th>Pemohon</th>
                                     <th>Nama Desa</th>
                                     <th>Nomor SK</th>
                                     <th>Keterangan</th>
