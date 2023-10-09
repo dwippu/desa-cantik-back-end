@@ -61,12 +61,24 @@
                 <span class="hide-menu">Profile Desa</span>
               </a>
             </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">STRUKTUR DESA</span>
+            </li>
             <li class="sidebar-item">
               <a class="sidebar-link <?php if (strcmp(uri_string(), "strukturdesa") == 0) echo 'active' ?>" href="/strukturdesa" aria-expanded="false">
                 <span>
                   <i class="ti ti-list"></i>
                 </span>
                 <span class="hide-menu">Struktur Desa</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link <?php if (strcmp(uri_string(), "daftarpengajuanstruktur") == 0) echo 'active' ?>" href="/daftarpengajuanstruktur" aria-expanded="false">
+                <span>
+                  <i class="ti ti-cards"></i>
+                </span>
+                <span class="hide-menu">Daftar Pengajuan</span>
               </a>
             </li>
             <li class="nav-small-cap">
