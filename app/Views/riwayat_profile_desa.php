@@ -117,7 +117,7 @@
                         <label for="maps" class="form-label">HTML Maps</label></p>
                         <textarea id="maps" name="maps" rows="4" cols="50" class="form-control" required></textarea>
                     </div>
-                    <?php if (auth()->user()->inGroup('verifikator')): ?>
+                    <?php if (auth()->user()->inGroup('verifikator') || auth()->user()->inGroup('adminkab')): ?>
                     <div class="modal-footer">
                         <button id="setujui" type="submit" class="btn btn-success">Setujui</button>
                         <button id="tolak" type="submit" class="btn btn-danger">Tolak</button>

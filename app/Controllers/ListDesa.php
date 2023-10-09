@@ -18,4 +18,14 @@ class ListDesa extends BaseController
     {
         echo 'ubah status desa menjadi desa cantik';
     }
+
+    public function desa($kab){
+        $desa = new WilayahModel();
+        $descan = $desa->findDescanByKab($kab);
+        return $this->response->setJSON($descan);
+    }
+
+    public function coba(){
+        dd($this->request->getPost());
+    }
 }

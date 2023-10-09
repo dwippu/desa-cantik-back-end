@@ -145,6 +145,28 @@
                 <span class="hide-menu">Laporan Bulanan</span>
               </a>
             </li>
+            <?php if (auth()->user()->inGroup('adminkab')): ?>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">MANAJEMEN AKUN</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link <?php if (strcmp(uri_string(), "users") == 0) echo 'active' ?>" href="/users" aria-expanded="false">
+                <span>
+                  <i class="ti ti-user"></i>
+                </span>
+                <span class="hide-menu">Daftar Akun</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link <?php if (strcmp(uri_string(), "register") == 0) echo 'active' ?>" href="/register" aria-expanded="false">
+                <span>
+                  <i class="ti ti-list"></i>
+                </span>
+                <span class="hide-menu">Tambah Akun</span>
+              </a>
+            </li>
+            <?php endif ?>
           </ul>
         </nav>
         <!-- End Sidebar navigation -->
