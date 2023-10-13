@@ -22,10 +22,18 @@ class ProfilDesaModel extends Model
         }
 	}
 
-    public function getRiwayat($kode_desa){
+    public function getRiwayatByOpr($kode_desa, $user_id){
         $data = $this->builder()
             ->select(['profil_desa.id', 'profil_desa.user_id', 'users.username', 'kode_desa', 'approval', 'tanggal_pengajuan', 'tanggal_konfirmasi'])
-            ->join('users', 'profil_desa.user_id=users.id')->where(['kode_desa'=>$kode_desa])
+            ->join('users', 'profil_desa.user_id=users.id')->where(['kode_desa'=>$kode_desa, 'user_id'=>$user_id])->orderBy('tanggal_pengajuan DESC')
+            ->get()->getResultArray();
+        return $data;
+    }
+
+    public function getRiwayatByDesa($kode_desa){
+        $data = $this->builder()
+            ->select(['profil_desa.id', 'profil_desa.user_id', 'users.username', 'kode_desa', 'approval', 'tanggal_pengajuan', 'tanggal_konfirmasi'])
+            ->join('users', 'profil_desa.user_id=users.id')->where(['kode_desa'=>$kode_desa])->orderBy('tanggal_pengajuan DESC')
             ->get()->getResultArray();
         return $data;
     }
@@ -33,7 +41,7 @@ class ProfilDesaModel extends Model
     public function getRiwayatByKab($kode_kab){
         $data = $this->builder()
             ->select(['profil_desa.id', 'profil_desa.user_id', 'users.username', 'kode_desa', 'approval', 'tanggal_pengajuan', 'tanggal_konfirmasi'])
-            ->join('users', 'profil_desa.user_id=users.id')->like('kode_desa', $kode_kab, 'after')
+            ->join('users', 'profil_desa.user_id=users.id')->like('kode_desa', $kode_kab, 'after')->orderBy('tanggal_pengajuan DESC')
             ->get()->getResultArray();
         return $data;
     }
