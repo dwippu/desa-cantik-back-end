@@ -12,7 +12,6 @@ class WilayahModel extends Model
     protected $returnType       = 'array';
     // protected $useSoftDeletes   = false;
     // protected $protectFields    = true;
-    // protected $allowedFields    = ['kode_desa', 'prov', 'nama_prov', 'kab', 'nama_kab', 'kec', 'nama_kec', 'desa', 'nama_desa'];
     protected $allowedFields    = ['descan'];
 
     public function findDescan(){
@@ -33,5 +32,9 @@ class WilayahModel extends Model
 
     public function findDescanByKab($kab){
         return $this->where(['kab'=>$kab])->where(['descan'=>1])->findAll();
+    }
+
+    public function makeDescan($kode){
+        
     }
 }

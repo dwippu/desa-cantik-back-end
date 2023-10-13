@@ -174,6 +174,28 @@ $(document).ready(function(){
             $('#form-reset-user').submit();
         }
     })
+    
+    //list descan sk
+    $('#jumlahdescan').keyup(function(){
+        if($('#label-input-kode-desa').prop("hidden")){
+            $('#label-input-kode-desa').prop("hidden", false)
+        }
+        $('.input-kode-desa').empty();
+        var jml = $(this).val();
+        for (let i = 0; i < jml; i++){
+            $('.input-kode-desa').prepend('<div class="col-3 pt-2"><input name="kode_desa" type="text" class="form-control kode-desa"></div>');
+        }
+    })
+    $('#jumlahdescan').change(function(){
+        if($('#label-input-kode-desa').prop("hidden")){
+            $('#label-input-kode-desa').prop("hidden", false)
+        }
+        $('.input-kode-desa').empty();
+        var jml = $(this).val();
+        for (let i = 0; i < jml; i++){
+            $('.input-kode-desa').prepend('<div class="col-3 pt-2"><input name="kode_desa[]" type="text" class="form-control kode-desa" required></div>');
+        }
+    })
 
     // Modal Struktur Desa
     if($('#inValidName').text() == 'in-valid name'){

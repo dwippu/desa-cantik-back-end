@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\UsersModel;
 use App\Models\WilayahUserModel;
 use App\Models\WilayahModel;
+use App\Controllers\Auth\WilayahUserController;
 
 /**
  * Controller untuk mengatur user
@@ -60,6 +61,39 @@ class Users extends BaseController
         };
 
         return $this->response->setJSON($user);
+    }
+
+    public function editview($id){
+        $desa = new WilayahModel();
+
+        // if (auth()->user()->inGroup('superadmin')){
+        //     return view('superadmin_pages/register', ['kab' => $desa->distinctKab()]);
+        // }
+        
+        $wilayah = new WilayahUserController();
+        $kode_kab = $wilayah->getWilayah(auth()->user());
+        $kode_kab = substr($kode_kab,2,2);
+        return view('edit_user_kab', ['list' => $desa->findDescanByKab($kode_kab)]);
+    }
+
+    public function edit(){
+        if (! auth()->loggedIn()) {
+            return redirect()->back();
+        }
+        $this->model = new UsersModel();
+        $pos = $this->request->getPost();
+
+        dd($pos);
+
+        if(auth()->user()->inGroup('adminkab')){
+            $user = new WilayahUserModel();
+            $kode_desa = $user->getWilayah(auth()->getUser()->id);
+            $kode_kab=substr($kode_desa,0,4);
+            $list = $this->model->getAllUserByKab($kode_kab);
+            $data = ['list' => $list];
+            return view('list_user_kab', $data);
+        }
+
     }
 
     protected function deleteuser(){

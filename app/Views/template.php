@@ -5,11 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Desa Cantik - Jawa Barat</title>
-  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/Logo.png" />
-  <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="shortcut icon" type="image/png" href="/assets/images/logos/Logo.png" />
+  <link rel="stylesheet" href="/assets/css/styles.min.css" />
 
   <!-- Data Tables Stylesheet -->
-  <link href="../assets/css/datatables.min.css" rel="stylesheet">
+  <link href="/assets/css/datatables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="./index.html" class="text-nowrap logo-img d-flex">
-              <img src="../assets/images/logos/Logo.png" alt="logo" width="100%" height="50px" >
+              <img src="/assets/images/logos/Logo.png" alt="logo" width="100%" height="50px" >
               <div class="pt-2 px-2">
                   <p  style="border:0; border-left: 1px; border-color:black; border-style:solid; padding-left:10%; color:#000;">
                     <b>PORTAL</b><br>Desa Cantik
@@ -193,7 +193,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" style="background-color:#5d87ff;"
                   aria-expanded="false">
-                  <img src="../assets/images/logos/def pic.png" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -231,16 +231,16 @@
       </div>
     </div>
   </div>
-  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/sidebarmenu.js"></script>
-  <script src="../assets/js/app.min.js"></script>
-  <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
-  <script src="../assets/js/dashboard.js"></script>
+  <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/sidebarmenu.js"></script>
+  <script src="/assets/js/app.min.js"></script>
+  <script src="/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+  <script src="/assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="/assets/js/dashboard.js"></script>
   <!-- Data Tables Javascript -->
-  <script src="../assets/js/datatables/datatables.min.js"></script>
-  <script src="../assets/js/datatables/custom.js"></script>
+  <script src="/assets/js/datatables/datatables.min.js"></script>
+  <script src="/assets/js/datatables/custom.js"></script>
 
 </body>
 

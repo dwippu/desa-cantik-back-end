@@ -41,6 +41,8 @@ $routes->group('',['filter' => 'session'], function ($routes) {
     $routes->group('',['filter' => 'group:adminkab,superadmin'], function ($routes) {
         $routes->get('/users', 'Users::index');
         $routes->get('/users/(:num)', 'Users::detail/$1'); //ajax
+        $routes->get('/users/edit/(:num)', 'Users::editview/$1');
+        $routes->post('/users/edit/', 'Users::edit');
         $routes->get('/register', 'Auth\RegisterController::registerView');
         $routes->post('/register', 'Auth\RegisterController::registerAction');
     });
@@ -50,6 +52,8 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->get('/listdesa/tambah', 'ListDesa::tambahview');
         $routes->post('/listdesa/tambah', 'ListDesa::tambahaction');
         $routes->get('/skdescan', 'SkDescan::index');
+        $routes->get('/uploadskdescan', 'SkDescan::uploadview');
+        $routes->post('/uploadskdescan', 'SkDescan::uploadpost');
     });
 });
 
