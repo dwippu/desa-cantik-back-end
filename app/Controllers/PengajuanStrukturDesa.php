@@ -44,7 +44,7 @@ class PengajuanStrukturDesa extends BaseController
         $user = new WilayahUserModel();
         $kondisi = $perangkat->validasiNama(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $this->request->getVar('nama'), $this->request->getVar('jabatan'));
         if ($kondisi==false){
-            session()->setFlashdata('validationName', 'Pengurus Sudah Terdaftar');
+            session()->setFlashdata('validationExist', 'Pengurus sudah terdaftar atau penambahan sudah diajukan');
         }else{
             $file_sk = $this->request->getFile('foto');
             $file_sk->move('Foto Perangkat');

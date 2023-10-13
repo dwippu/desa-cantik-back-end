@@ -23,6 +23,9 @@ $routes->group('',['filter' => 'session'], function ($routes) {
     $routes->group('',['filter' => 'group:operator'], function ($routes) {
         $routes->post('/pengajuanprofiledesa', 'PengajuanProfileDesa::pengajuan');
         $routes->post('/pengajuanstrukturdesa', 'PengajuanStrukturDesa::pengajuan');
+        $routes->post('/aktifstrukturdesa/(:any)', 'StrukturDesa::edit/$1');
+        $routes->get('/editstrukturdesa/(:any)', 'EditStrukturDesa::index/$1');
+        $routes->post('/editstrukturdesa/(:any)', 'EditStrukturDesa::edit/$1');
         $routes->delete('/profiledesa/(:num)', 'ProfileDesa::delete/$1');
         $routes->delete('/daftarpengajuanstruktur/(:num)', 'DaftarPengajuanStruktur::delete/$1');
     });

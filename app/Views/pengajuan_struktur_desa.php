@@ -5,10 +5,9 @@
 
         <div class="card" style="background-color:#5D87FF;">
         <div class="card-body">
-            <h2 class="fw-semibold mb-4 text-bg-primary">Struktur Desa</h2>
+            <h2 class="fw-semibold mb-4 text-bg-primary">Tambah Struktur Desa</h2>
             <div class="card">
             <div class="card-body">
-                <h4 class=" fw-semibold mb-4">Data Kepala Desa</h4>
                 <form action="/pengajuanstrukturdesa" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama</label>
@@ -37,8 +36,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="foto" class="form-label">Upload Foto</label>
-                        <input class="form-control <?php  if (session('validation')){if (array_key_exists("foto", session('validation'))) {echo 'is-invalid';};};?>" id="foto" name="foto" type="file">
+                        <input class="form-control <?php  if (session('validation')){if (array_key_exists("foto", session('validation'))) {echo 'is-invalid';};};?>" id="foto" name="foto" type="file" onchange="previewImg()">
                         <div class="invalid-feedback"><?php  if (session('validation')){if (array_key_exists("foto", session('validation'))) {echo (session('validation')['foto']);};};?></div>
+                        <label class="form-label">Photo Preview</label><br>
+                        <img src="../assets/images/logos/def image.png" id="fotoPrev" class="card-img-top rounded w-25" alt="Foto Perangkat Desa">
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Submit</button>

@@ -37,6 +37,7 @@ $(document).ready(function(){
         $('#modalView').modal('hide');
         $('#modalDelete').modal('hide');
         $('#modalReset').modal('hide');
+        $('#modalAktif').modal('hide');
         tutupModal();
     });
 
@@ -224,4 +225,26 @@ $(document).ready(function(){
             $('form').attr('action', '/tolakstruktur/'+id);
         });
     });
+
+    // Modal Aktifkan struktur
+    $(document).on('click', '#btnAktif', function(){
+        var id = $(this).attr('data-id');
+        var status = $(this).attr('data-status');
+        $('#pesanAktif').text("Apakah yakin "+status+"?");
+        $('#keteranganAktif').val(status);
+        $('form').attr('action', '/aktifstrukturdesa/'+id);
+        $('#modalAktif').modal('show');
+    });
+
 });
+
+// Photo Preview On Change
+function previewImg(){
+    const foto = document.querySelector('#foto');
+    const imgPrev = document.querySelector('#fotoPrev');
+    const fileFoto = new FileReader();
+    fileFoto.readAsDataURL(foto.files[0]);
+    fileFoto.onload = function(e){
+        imgPrev.src = e.target.result;
+    };
+};

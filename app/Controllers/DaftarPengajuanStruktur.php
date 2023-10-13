@@ -47,28 +47,61 @@ class DaftarPengajuanStruktur extends BaseController
         $perangkat = new PerangkatDesaModel();
         $wilayah = new WilayahModel();
         $user = new WilayahUserModel();
+
+        $approval="";
+        $aktif="Aktif";
+        $jabatan=$this->request->getVar('jabatan');
+        if ($this->request->getVar('keterangan') == "Penambahan Diajukan"){
+            $approval="Penambahan Disetujui";
+            if($jabatan!="Agen Statistik"){
+                $lastPerangkat = $perangkat->getLastActiveByJabatan(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $jabatan);
+                if ($lastPerangkat!=null){
+                    $perangkat->update($lastPerangkat[0]['id'],[
+                        'aktif' => 'Tidak Aktif'
+                    ]);
+                }
+            }
+        }elseif ($this->request->getVar('keterangan') == "Perubahan Diajukan"){
+            $approval="Perubahan Disetujui";
+            $edit_from = ($perangkat->find($id))['edit_from'];
+            $perangkat_lama = $perangkat->find($edit_from);
+            $perangkat->update($edit_from, ['aktif'=>null]);
+            if($jabatan!="Agen Statistik"){
+                $lastPerangkat = $perangkat->getLastActiveByJabatan(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $jabatan);
+                if ($lastPerangkat!=null){
+                    $perangkat->update($lastPerangkat[0]['id'],[
+                        'aktif' => 'Tidak Aktif'
+                    ]);
+                }
+            }
+        }elseif ($this->request->getVar('keterangan') == "Aktifkan Diajukan"){
+            $approval="Aktifkan Disetujui";
+            if($jabatan!="Agen Statistik"){
+                $lastPerangkat = $perangkat->getLastActiveByJabatan(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $jabatan);
+                if ($lastPerangkat!=null){
+                    $perangkat->update($lastPerangkat[0]['id'],[
+                        'aktif' => 'Tidak Aktif'
+                    ]);
+                }
+            }
+        }elseif ($this->request->getVar('keterangan') == "Non-Aktifkan Diajukan"){
+            $approval="Non-Aktifkan Disetujui";
+            $aktif="Tidak Aktif";
+        };
+
         $lastPerangkat = $perangkat->getLastActive(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $this->request->getVar('nama'), $this->request->getVar('jabatan'));
         if ($lastPerangkat!=null){
             $perangkat->update($lastPerangkat['id'],[
                 'aktif' => null
             ]);
         }
-        $approval="";
-        if ($this->request->getVar('keterangan') == "Penambahan Diajukan"){
-            $approval="Penambahan Disetujui";
-        }elseif ($this->request->getVar('keterangan') == "Perubahan Diajukan"){
-            $approval="Perubahan Disetujui";
-        }elseif ($this->request->getVar('keterangan') == "Aktivasi Diajukan"){
-            $approval="Aktivasi Disetujui";
-        }elseif ($this->request->getVar('keterangan') == "Deaktivasi Diajukan"){
-            $approval="Deaktivasi Disetujui";
-        };
+        
         $perangkat->update($id,[
             'nama' => $this->request->getVar('nama'), 
             'email' => $this->request->getVar('email'), 
             'instagram' => $this->request->getVar('ig'), 
             'jabatan' => $this->request->getVar('jabatan'),
-            'aktif' => 'Aktif',
+            'aktif' => $aktif,
             'approval'=>$approval,
             'tanggal_konfirmasi' => date('Y-m-d H:i:s')
         ]);
@@ -78,17 +111,20 @@ class DaftarPengajuanStruktur extends BaseController
     public function tolak($id){
         $perangkat = new PerangkatDesaModel();
         $approval="";
+        $aktif=null;
         if ($this->request->getVar('keterangan') == "Penambahan Diajukan"){
             $approval="Penambahan Ditolak";
+            $aktif="Tidak Aktif";
         }elseif ($this->request->getVar('keterangan') == "Perubahan Diajukan"){
             $approval="Perubahan Ditolak";
-        }elseif ($this->request->getVar('keterangan') == "Aktivasi Diajukan"){
-            $approval="Aktivasi Ditolak";
-        }elseif ($this->request->getVar('keterangan') == "Deaktivasi Diajukan"){
-            $approval="Deaktivasi Ditolak";
+        }elseif ($this->request->getVar('keterangan') == "Aktifkan Diajukan"){
+            $approval="Aktifkan Ditolak";
+        }elseif ($this->request->getVar('keterangan') == "Non-Aktifkan Diajukan"){
+            $approval="Non-Aktifkan Ditolak";
         };
         $perangkat->update($id,[
             'approval'=>$approval,
+            'aktif'=>$aktif,
             'tanggal_konfirmasi' => date('Y-m-d H:i:s')
         ]);
         return redirect('daftarpengajuanstruktur');

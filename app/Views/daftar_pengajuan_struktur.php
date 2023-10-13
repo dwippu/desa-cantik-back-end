@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<?php  if (session('validationName')): ?>
+<?php  if (session('validationExist')): ?>
 <!-- Modals Nama sudah ada -->
 <p id="inValidName" hidden>in-valid name</p>
 <div class="modal fade" id="modalInValid" tabindex="-1" role="dialog" aria-hidden="true">
@@ -81,7 +81,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p style="font-weight: bold;">Pengurus sudah terdaftar</p>
+        <p style="font-weight: bold;"><?= session('validationExist')?></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger closeModal" data-bs-dismiss="modal">Close</button>
