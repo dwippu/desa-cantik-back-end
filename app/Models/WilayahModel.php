@@ -34,6 +34,10 @@ class WilayahModel extends Model
         return $this->where(['kab'=>$kab])->where(['descan'=>1])->findAll();
     }
 
+    public function namaProv($id_prov){
+        return $this->builder()->select(['nama_prov'])->distinct()->where('prov', $id_prov)->get()->getResultArray();
+    }
+
     public function makeDescan($kode){
         
     }

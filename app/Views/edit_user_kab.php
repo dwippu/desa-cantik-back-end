@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="card" style="background-color:#5D87FF;">
     <div class="card-body">
-        <h2 class="fw-semibold mb-4 text-bg-primary">Tambahkan Akun</h2>
+        <h2 class="fw-semibold mb-4 text-bg-primary">Edit Informasi Akun</h2>
         <div class="card">
         <div class="card-body">
 
@@ -31,44 +31,38 @@
                         <div class="alert alert-success" role="alert"><?= session('message') ?></div>
                     <?php endif ?>
 
-                    <form action="<?= url_to('register') ?>" method="post">
+                    <form action="/users/edit" method="post">
                         <?= csrf_field() ?>
-
+                        <input type="hidden" name="id" value="<?= $user['user_id'] ?>">
                         <!-- Email -->
-                        <div class="mb-2">
-                            <input type="email" class="form-control" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required />
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" inputmode="email" autocomplete="email" value="<?= $user['secret'] ?>" required />
                         </div>
 
                         <!-- Username -->
                         <div class="mb-4">
-                            <input type="text" class="form-control" name="username" inputmode="text" autocomplete="username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>" required />
-                        </div>
-
-                        <!-- Password -->
-                        <div class="mb-2">
-                            <input type="password" class="form-control" name="password" inputmode="text" autocomplete="new-password" placeholder="<?= lang('Auth.password') ?>" required />
-                        </div>
-
-                        <!-- Password (Again) -->
-                        <div class="mb-4">
-                            <input type="password" class="form-control" name="password_confirm" inputmode="text" autocomplete="new-password" placeholder="<?= lang('Auth.passwordConfirm') ?>" required />
+                            <label for="username" class="form-label">Nama</label>
+                            <input type="text" class="form-control" name="username" inputmode="text" autocomplete="username" value="<?= $user['username'] ?>" required />
                         </div>
 
                         <!-- Role -->
                         <div class="mb-4">
+                            <label for="role" class="form-label">Role</label>    
                             <select class="form-select" name="role" id="role" required>
-                                <option selected disabled value="">Pilih Role</option>
-                                <option value="operator">Operator Desa</option>
-                                <option value="verifikator">Verifikator Desa</option>
+                                <option disabled value="">Pilih Role</option>
+                                <option <?php if($user['kode_desa']=='operator') {echo 'selected';} ?> value="operator">Operator Desa</option>
+                                <option <?php if($user['kode_desa']=='verifikator') {echo 'selected';} ?> value="verifikator">Verifikator Desa</option>
                             </select>
                         </div>    
 
                         <!-- Kode Desa -->
                         <div class="mb-5">
+                        <label for="kode_desa" class="form-label">Desa</label>
                             <select class="form-select" name="kode_desa" id="kode_desa" required>
-                                <option selected disabled value="">Pilih Desa</option>
+                                <option disabled value="">Pilih Desa</option>
                                 <?php foreach ($list as $list): ?>
-                                    <option value="<?= $list['kode_desa'] ?>"><?= $list['nama_desa'] ?></option>
+                                    <option <?php if($list['kode_desa'] == $user['kode_desa']) {echo 'selected';} ?> value="<?= $list['kode_desa'] ?>"> <?= $list['nama_desa'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>

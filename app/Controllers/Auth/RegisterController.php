@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
-use App\Controllers\Auth\WilayahUserController;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
@@ -19,6 +18,7 @@ use CodeIgniter\Shield\Models\UserModel;
 use CodeIgniter\Shield\Traits\Viewable;
 use Psr\Log\LoggerInterface;
 use App\Models\WilayahModel;
+use App\Models\WilayahUserModel;
 
 /**
  * Class RegisterController
@@ -75,8 +75,8 @@ class RegisterController extends BaseController
             return $this->view('superadmin_pages/register', ['kab' => $desa->distinctKab()]);
         }
         
-        $wilayah = new WilayahUserController();
-        $kode_kab = $wilayah->getWilayah(auth()->user());
+        $wilayah = new WilayahUserModel();
+        $kode_kab = $wilayah->getWilayah(auth()->user()->id);
         $kode_kab = substr($kode_kab,2,2);
         return $this->view('register_kab', ['list' => $desa->findDescanByKab($kode_kab)]);
     }
@@ -86,7 +86,7 @@ class RegisterController extends BaseController
      */
     public function registerAction(): RedirectResponse
     {
-        $wilayah = new WilayahUserController();
+        $wilayah = new WilayahUserModel();
 
         $users = $this->getUserProvider();
 
@@ -106,7 +106,7 @@ class RegisterController extends BaseController
             if($this->request->getPost()['role'] == 'adminkab'){
                 return redirect()->back()->withInput()->with('errors', 'Role tidak terdaftar');
             }
-            $kode_kab = $wilayah->getWilayah(auth()->user());
+            $kode_kab = $wilayah->getWilayah(auth()->user()->id);
             if (substr($kode_kab,0,4) != substr($this->request->getPost()['kode_desa'],0,4)){
                 return redirect()->back()->withInput()->with('errors', 'Desa tidak ditemukan');
             }
@@ -218,8 +218,8 @@ class RegisterController extends BaseController
     }
 
     protected function setUserWilayah(User $user, string $kode_wilayah){
-        $wil = new WilayahUserController();
-        $wil->addWilayah($user, $kode_wilayah);
+        $wil = new WilayahUserModel();
+        $wil->setWilayah($user->id, $kode_wilayah);
     }
 
     protected function editUserWilayah(User $user, string $kode_wilayah){

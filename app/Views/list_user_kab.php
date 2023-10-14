@@ -29,10 +29,11 @@
                         <table id="user" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Username</th>
+                                    <th>Nama</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Kode Desa</th>
+                                    <th>Status</th>
                                     <th>Terakhir Aktif</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -44,8 +45,16 @@
                                     <td><?=$row['secret']?></td>
                                     <td><?=$row['group']?></td>
                                     <td><?=$row['kode_desa']?></td>
+                                    <td>
+                                      <?php if($row['status'] == 'banned'){
+                                              echo '<span class="badge bg-danger rounded-3 fw-semibold">Nonaktif</span>';
+                                            } else {
+                                              echo '<span class="badge bg-success rounded-3 fw-semibold">Aktif</span>';
+                                            }
+                                      ?>
+                                    </td>
                                     <td><?=$row['last_active']?></td>
-                                    <td><button data-id="<?=$row['user_id']?>" id="btnViewUser" class="btn btn-outline-primary rounded-pill" data-toggle="modal" data-target="#modalView"><i class="fa fa-search"></i>Detail</button></td>
+                                    <td><button data-id="<?=$row['user_id']?>" id="btnViewUser" class="btn btn-outline-primary rounded-pill" data-toggle="modal" data-target="#modalView" <?php if ($row['user_id'] == auth()->user()->id){echo 'disabled';}?>><i class="fa fa-search"></i>Detail</button></td>
                                 </tr>
                             <?php endforeach;?>
                             </tbody>
@@ -105,7 +114,7 @@
                 <div class="modal-footer">
                     <button type="button" id="ubah_info" class="btn btn-success" data-id="">Ubah Informasi Akun</button>
                     <button type="button" id="resetbtn" class="btn btn-warning" data-id="">Reset Password</button>
-                    <button type="button" id="deletebtn" class="btn btn-danger" data-id="">Hapus Akun</button>
+                    <button type="button" id="deletebtn" class="btn btn-danger" data-id="">Nonaktifkan Akun</button>
                 </div>     
             </form>
         </div>
@@ -113,7 +122,7 @@
   </div>
 </div>
 
-<!-- Modal Delete User-->
+<!-- Modal Nonaktif User-->
 <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -126,19 +135,18 @@
       <div class="modal-body">
         <div class="alert alert-danger d-flex align-items-center" role="alert">
           <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-          <div>
-            Apakah Anda yakin untuk menghapus akun ini?
+          <div id="warning-delete">
+            Apakah Anda yakin untuk menonaktifkan akun ini?
           </div>
         </div>
       </div>
       <div class="col">
         <div class="collapse multi-collapse pass-collapse">
           <div class="card card-body p-4">
-            <form action="/cobapost" method="post" class="d-inline" id="form-delete-user">
-              <label for="password" class="mb-2">Masukkan Password Anda</label>  
-              <input type="password" name="old-password" class="form-control" placeholder="password" required>
+            <form action="/nonaktifuser" method="post" class="d-inline" id="form-delete-user">
+              <label for="old-password" class="mb-2">Masukkan Password Anda</label>  
+              <input type="password" name="old-password" class="form-control" id="old_password" placeholder="password" required>
               <input type="hidden" id="user_id_delete" name="user_id" value="">
-              <input type="hidden" name="_method" value="DELETE">
             </form>
           </div>
         </div>
@@ -192,5 +200,8 @@
     </div>
   </div>
 </div>
+<?php if(session('errors') !== null): ?>
+    <script type="text/javascript">alert("<?= session('errors')['wrong-password'] ?>")</script>
+<?php endif ?>
 
 <?= $this->endSection(); ?>

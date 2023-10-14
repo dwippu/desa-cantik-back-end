@@ -45,6 +45,7 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->post('/users/edit/', 'Users::edit');
         $routes->get('/register', 'Auth\RegisterController::registerView');
         $routes->post('/register', 'Auth\RegisterController::registerAction');
+        $routes->post('/nonaktifuser', 'Users::nonaktifuser');
     });
     $routes->group('',['filter' => 'group:superadmin'], function ($routes) {
         $routes->get('/desa/(:any)', 'ListDesa::desa/$1'); // url ajax
