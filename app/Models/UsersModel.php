@@ -9,7 +9,7 @@ class UsersModel extends Model
     protected $table = 'Users';
     public function getAllUser(){
         $data = $this->builder()
-            ->select(['auth_groups_users.user_id','username','secret','group','kode_desa','last_active'])
+            ->select(['auth_groups_users.user_id','username','secret','group','kode_desa', 'status', 'last_active'])
             ->join('auth_groups_users', 'users.id = auth_groups_users.user_id')
             ->join('auth_identities', 'users.id=auth_identities.user_id')
             ->get()->getResultArray();
@@ -18,7 +18,7 @@ class UsersModel extends Model
 
     public function getAllUserByKab($kode_kab){
         $data = $this->builder()
-            ->select(['auth_groups_users.user_id','username','secret','group','kode_desa','last_active'])
+            ->select(['auth_groups_users.user_id','username','secret','group','kode_desa', 'status','last_active'])
             ->join('auth_groups_users', 'users.id = auth_groups_users.user_id')
             ->like('kode_desa', $kode_kab, 'after')
             ->join('auth_identities', 'users.id=auth_identities.user_id')
@@ -28,7 +28,7 @@ class UsersModel extends Model
 
     public function detailUser($id){
         $data = $this->builder()
-        ->select(['auth_groups_users.user_id','username','secret','group','auth_groups_users.kode_desa','last_active', 'nama_desa'])
+        ->select(['auth_groups_users.user_id','username','secret','group','auth_groups_users.kode_desa', 'status', 'last_active', 'nama_desa'])
         ->where('auth_groups_users.user_id',$id)
         ->join('auth_groups_users', 'users.id = auth_groups_users.user_id')
         ->join('auth_identities', 'users.id=auth_identities.user_id')

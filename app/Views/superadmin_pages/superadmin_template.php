@@ -122,15 +122,17 @@
                   <div class="message-body">
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
+                      <p class="mb-0 fs-3"><?= auth()->user()->username ?></p>
                     </a>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
+                      Super Admin
+                      <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-check fs-6"></i>
+                      <p class="mb-0 fs-3"><?php helper('wilayah');
+                        echo wilayah_user(auth()->user());
+                       ?></p>
+                    </a>
                     </a>
                     <a href="./logout" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>

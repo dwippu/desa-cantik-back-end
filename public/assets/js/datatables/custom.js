@@ -127,6 +127,13 @@ $(document).ready(function(){
                 $('#nama').val(response['username']);
                 $('#role').val(response['group']);
                 $('#last_active').val(response['last_active']);
+                if(response['status'] == 'banned'){
+                    $('#deletebtn').text('Aktifkan Akun');
+                    $('#warning-delete').text('Apakah Anda yakin untuk mengaktifkan kembali akun ini?')
+                } else{
+                    $('#deletebtn').text('Nonaktifkan Akun');
+                    $('#warning-delete').text('Apakah Anda yakin untuk menonaktifkan akun ini?');
+                }
             }
         });
     });
@@ -137,22 +144,35 @@ $(document).ready(function(){
         $('#resetaction').text('Ya')
     };
 
-    //Delete user
+    //Nonaktif user
     $(document).on('click', '#deletebtn', function(){
         $('#modalDelete').modal('show');
-        var id = $(this).attr('data-id');
     });
 
     $('#delaction').click(function(){
         var isi = $(this).text();
         var id = $('#deletebtn').attr('data-id');
+        var isi2 = $('#deletebtn').text();
         $('.pass-collapse').addClass('show')
         if (isi == 'Ya'){
-            $(this).text('Hapus Akun')
+            $(this).text(isi2)
         }
-        if (isi == 'Hapus Akun'){
+        if (isi == 'Nonaktifkan Akun'){
             $('#user_id_delete').val(id);
-            $('#form-delete-user').submit();
+            if($('#old_password').val() == ""){
+                alert('Password Harus Diisi');
+            }
+            else{
+                $('#form-delete-user').submit();
+            }
+        } else if (isi == 'Aktifkan Akun'){
+            $('#user_id_delete').val(id)
+            if($('#old_password').val() == ""){
+                alert('Password Harus Diisi');
+            }
+            else{
+                $('#form-delete-user').submit();
+            }
         }
     })
 
@@ -161,7 +181,6 @@ $(document).ready(function(){
         $('#modalReset').modal('show');
         var id = $(this).attr('data-id');
     });
-
 
     $('#resetaction').click(function(){
         var isi = $(this).text();
@@ -175,6 +194,12 @@ $(document).ready(function(){
             $('#form-reset-user').submit();
         }
     })
+
+    // Ubah Info Akun
+    $(document).on('click', '#ubah_info', function(){
+        var id = $(this).attr('data-id');
+        window.location.href = "/users/edit/"+id;
+    });
     
     //list descan sk
     $('#jumlahdescan').keyup(function(){

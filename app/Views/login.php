@@ -42,17 +42,17 @@
           
             <div class="card mb-0">
               <div class="card-body">
-                <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
+                <a href="/" class="text-nowrap logo-img text-center d-block py-2 w-100">
+                  <img src="/assets/images/logos/Descan Login.png" width="270" alt="">
                 </a>
-                <p class="text-center">Your Social Campaigns</p>
+                <p class="text-center">Login ke Web Back End</p>
                 <form action="<?= url_to('login') ?>" method="post">
                   <?= csrf_field() ?>
 
                   <!-- Email -->
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Username</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" inputmode="email" autocomplete="email" placeholder="<?= lang('Auth.email') ?>" value="<?= old('email') ?>" required />
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" inputmode="email" autocomplete="email" placeholder="Alamat Email" required />
                   </div>
                   
                   <!-- Password -->
@@ -68,7 +68,7 @@
                         <div class="form-check">
                         <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" <?php if (old('remember')): ?> checked<?php endif ?>>
                         <label class="form-check-label text-dark" for="flexCheckChecked">
-                            Remeber this Device
+                            Ingat Saya
                         </label>
                         </div>
                     <?php endif ?>

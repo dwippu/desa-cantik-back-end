@@ -61,6 +61,7 @@ class LoginController extends BaseController
 
         // Attempt to login
         $result = $authenticator->remember($remember)->attempt($credentials);
+        // dd($authenticator->hasAction());
         if (! $result->isOK()) {
             return redirect()->route('login')->withInput()->with('error', $result->reason());
         }
@@ -98,6 +99,11 @@ class LoginController extends BaseController
                 ],
             ],
         ];
+    }
+
+    protected function activeUser()
+    {
+        return true;
     }
 
     /**

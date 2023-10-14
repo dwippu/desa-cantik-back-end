@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\UsersModel;
 use App\Models\WilayahUserModel;
 use App\Models\WilayahModel;
-use App\Controllers\Auth\WilayahUserController;
+use CodeIgniter\Shield\Models\UserModel;
 
 /**
  * Controller untuk mengatur user
@@ -64,16 +64,32 @@ class Users extends BaseController
     }
 
     public function editview($id){
+        if (! auth()->loggedIn()) {
+            return redirect()->back();
+        }
         $desa = new WilayahModel();
 
-        // if (auth()->user()->inGroup('superadmin')){
-        //     return view('superadmin_pages/register', ['kab' => $desa->distinctKab()]);
-        // }
+        $this->model = new UsersModel();
+        $user = $this->model->detailUser($id)[0];
+
+        // Nama Kabupaten
+        $wil = new WilayahModel;
+        $wil = $wil->namaKab(substr($user['kode_desa'],2,2));
+        $user['nama_kab'] = $wil ? $wil[0]['nama_kab']:null;
         
-        $wilayah = new WilayahUserController();
-        $kode_kab = $wilayah->getWilayah(auth()->user());
+        if (auth()->user()->inGroup('adminkab')){
+            $wilayah = new WilayahUserModel();
+            $kode_kab1 = substr($wilayah->getWilayah(auth()->user()->id),0,4);
+            $kode_kab2 = substr($user['kode_desa'],0,4);
+            if($kode_kab1 !== $kode_kab2){
+                return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Tidak dapat mengedit akun ini!']);
+            }
+        }
+
+        $wilayah = new WilayahUserModel();
+        $kode_kab = $wilayah->getWilayah(auth()->user()->id);
         $kode_kab = substr($kode_kab,2,2);
-        return view('edit_user_kab', ['list' => $desa->findDescanByKab($kode_kab)]);
+        return view('edit_user_kab', ['list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
     }
 
     public function edit(){
@@ -83,24 +99,66 @@ class Users extends BaseController
         $this->model = new UsersModel();
         $pos = $this->request->getPost();
 
-        dd($pos);
+        $this->model = new UsersModel();
+        $user = $this->model->detailUser($pos['id'])[0];
 
-        if(auth()->user()->inGroup('adminkab')){
-            $user = new WilayahUserModel();
-            $kode_desa = $user->getWilayah(auth()->getUser()->id);
-            $kode_kab=substr($kode_desa,0,4);
-            $list = $this->model->getAllUserByKab($kode_kab);
-            $data = ['list' => $list];
-            return view('list_user_kab', $data);
+        // Nama Kabupaten
+        $wil = new WilayahModel;
+        $wil = $wil->namaKab(substr($user['kode_desa'],2,2));
+        $user['nama_kab'] = $wil ? $wil[0]['nama_kab']:null;
+
+        if(auth()->user()->inGroup('adminkab')){            
+            $wilayah = new WilayahUserModel();
+            $kode_kab1 = substr($wilayah->getWilayah(auth()->user()->id),0,4);
+            $kode_kab2 = substr($user['kode_desa'],0,4);
+            if($kode_kab1 !== $kode_kab2){
+                return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Tidak dapat mengedit akun ini!']);
+            }
         }
 
     }
 
-    protected function deleteuser(){
+    public function nonaktifuser(){
         helper('oldpassword');
-    }
+        // dd($this->request->getPost('old-password'));
+        $pass = $this->request->getPost('old-password');
+        if (!old_password_is_correct($pass)){
+            return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Password Salah!']);
+        };
 
-    protected function updateuser(){
+        if($this->request->getPost('user_id') == auth()->user()->id){
+            return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Tidak dapat menonaktifkan akun ini!']);
+        }
 
+        if(auth()->user()->inGroup('adminkab')){
+            $this->model = new UsersModel();
+            $user1 = $this->model->detailUser($this->request->getPost('user_id'))[0];
+
+            // Nama Kabupaten
+            $wil = new WilayahModel;
+            $wil = $wil->namaKab(substr($user1['kode_desa'],2,2));
+            $user1['nama_kab'] = $wil ? $wil[0]['nama_kab']:null;
+
+            $wilayah = new WilayahUserModel();
+            $kode_kab1 = substr($wilayah->getWilayah(auth()->user()->id),0,4);
+            $kode_kab2 = substr($user1['kode_desa'],0,4);
+            if($kode_kab1 !== $kode_kab2){
+                return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Tidak dapat menonaktifkan akun ini!']);
+            }
+
+            if($user1['kode_desa'] == $wilayah->getWilayah(auth()->user()->id)){
+                return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Tidak dapat menonaktifkan akun ini!']);
+            }
+        }
+
+        $user = new UserModel();
+        $user = $user->find($this->request->getPost('user_id'));
+        
+        if($user->isBanned()){
+            $user->unBan();
+            return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Akun Berhasil Diaktifkan Kembali!']);
+        }
+        $user->ban('Akun dinonaktifkan oleh Admin Kabupaten. Hubungi Admin untuk membuka kembali');
+        return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Akun Berhasil Dinonaktifkan!']);
     }
 }
