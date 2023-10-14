@@ -23,6 +23,7 @@ $(document).ready(function(){
         $('#modalCancel').modal('hide');
         $('#modalView').modal('hide');
         $('#modalInValid').modal('hide');
+        $('#modalHapusSk').modal('hide');
     });
 
     // Modal Profile
@@ -283,6 +284,68 @@ $(document).ready(function(){
         $('#modalAktif').modal('show');
     });
 
+    // View SK
+    $(document).on('click', '#btnViewSk', function(){
+        var file = $(this).attr('data-file');
+        var no_sk = $(this).attr('data-sk');
+        document.getElementById("fileSkAgen").src = "../SK Agen/"+file;
+        $('#namaSK').text(no_sk);
+        $('#modalView').modal('show');
+
+    });
+
+    // View SK Agen
+    $(document).on('click', '#btnViewSkAgen', function(){
+        var id = $(this).attr('data-id');
+        var keterangan = $(this).attr('data-keterangan');
+        $('#keteranganView').val(keterangan);
+        $('#modalView').modal('show');
+
+        $.ajax({
+            method: "GET",
+            url: "/daftarskagenstatistik/"+id,
+            success: function(response){
+                document.getElementById("fileSkAgen").src = "../SK Agen/"+response.sk_agen['file'];
+                $("#namaSK").text("SK Agen Statistik - "+response.sk_agen['nomor_sk']);
+                $("#no_sk").val(response.sk_agen['nomor_sk']);
+                $("#tanggal_sk").val(response.sk_agen['tanggal_sk']);
+                if (response.sk_agen['tanggal_konfirmasi']!=null){
+                    $('#setujui').prop('disabled', true);
+                    $('#tolak').prop('disabled', true);
+                }else{
+                    $('#setujui').prop('disabled', false);
+                    $('#tolak').prop('disabled', false);
+                };
+            }
+        });
+
+        $('#setujui').click(function(e){
+            $('form').attr('action', '/setujuiskagen/'+id);
+        });
+
+        $('#tolak').click(function(e){
+            $('form').attr('action', '/tolakskagen/'+id);
+        });
+
+    });
+
+    // Hapus SK
+    $(document).on('click', '#btnHapusSk', function(){
+        var id = $(this).attr('data-id');
+        $('form').attr('action', '/hapusskagen/'+id);
+        $('#modalHapusSk').modal('show');
+    });
+
+    // Modal Cancel SK Agen
+    $(document).on('click', '#btnCancelSkAgen', function(){
+        var id = $(this).attr('data-id');
+        var keterangan = $(this).attr('data-keterangan');
+        $('#keteranganCancel').val(keterangan);
+        $('form').attr('action', '/daftarskagenstatistik/'+id);
+        $('#modalCancel').modal('show');
+    });
+
+
 });
 
 // Photo Preview On Change
@@ -293,5 +356,15 @@ function previewImg(){
     fileFoto.readAsDataURL(foto.files[0]);
     fileFoto.onload = function(e){
         imgPrev.src = e.target.result;
+    };
+};
+
+function previewpdf(){
+    const pdf = document.querySelector('#file_sk');
+    const pdfPrev = document.querySelector('#fileSkAgen');
+    const fileFoto = new FileReader();
+    fileFoto.readAsDataURL(pdf.files[0]);
+    fileFoto.onload = function(e){
+        pdfPrev.src = e.target.result;
     };
 };

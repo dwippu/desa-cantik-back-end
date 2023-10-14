@@ -17,6 +17,8 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->get('/daftarpengajuanstruktur/(:any)', 'DaftarPengajuanStruktur::view/$1');
         $routes->get('/strukturdesa', 'StrukturDesa::index');
         $routes->get('/skagen', 'SkAgen::index');
+        $routes->get('/daftarskagenstatistik', 'DaftarPengajuanSkAgen::index');
+        $routes->get('/daftarskagenstatistik/(:any)', 'DaftarPengajuanSkAgen::view/$1');
         $routes->get('/pengajuanskagen', 'PengajuanSkAgen::index');
         $routes->post('/pengajuanskagen', 'PengajuanSkAgen::pengajuan');
     });
@@ -28,12 +30,18 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->post('/editstrukturdesa/(:any)', 'EditStrukturDesa::edit/$1');
         $routes->delete('/profiledesa/(:num)', 'ProfileDesa::delete/$1');
         $routes->delete('/daftarpengajuanstruktur/(:num)', 'DaftarPengajuanStruktur::delete/$1');
+        $routes->delete('/daftarskagenstatistik/(:num)', 'DaftarPengajuanSkAgen::delete/$1');
+        $routes->post('/hapusskagen/(:any)', 'SkAgen::hapus/$1');
+        $routes->get('/editskagen/(:any)', 'EditSkAgen::index/$1');
+        $routes->post('/editskagen/(:any)', 'EditSkAgen::pengajuan/$1');
     });
     $routes->group('',['filter' => 'group:verifikator,adminkab'], function ($routes) {
         $routes->post('/setujuiprofile/(:any)', 'ProfileDesa::setujui/$1');
         $routes->post('/tolakprofile/(:any)', 'ProfileDesa::tolak/$1');
         $routes->post('/setujuistruktur/(:any)', 'DaftarPengajuanStruktur::setujui/$1');
         $routes->post('/tolakstruktur/(:any)', 'DaftarPengajuanStruktur::tolak/$1');
+        $routes->post('/setujuiskagen/(:any)', 'DaftarPengajuanSkAgen::setujui/$1');
+        $routes->post('/tolakskagen/(:any)', 'DaftarPengajuanSkAgen::tolak/$1');
     });
     $routes->group('',['filter' => 'group:adminkab'], function ($routes) {
         

@@ -9,22 +9,26 @@
             <div class="card">
             <div class="card-body">
                 <form action="/pengajuanprofiledesa" method="post">
-                    <div class="mb-3">
-                        <label for="prov" class="form-label">Provinsi</label>
-                        <input type="text" id="prov" name="prov" class="form-control" value="<?= $info_desa['nama_prov']?>" disabled>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="prov" class="form-label">Provinsi</label>
+                            <input type="text" id="prov" name="prov" class="form-control" value="<?= $info_desa['nama_prov']?>" disabled>
+                        </div>
+                        <div class="col-6">
+                            <label for="kabkot" class="form-label">Kabupaten/Kota</label>
+                            <input type="kabkot" id="kabkot" name="kabkot" class="form-control" value="<?= $info_desa['nama_kab']?>" disabled>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="kabkot" class="form-label">Kabupaten/Kota</label>
-                        <input type="kabkot" id="kabkot" name="kabkot" class="form-control" value="<?= $info_desa['nama_kab']?>" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="kec" class="form-label">Kecamatan</label>
-                        <input type="kec" id="kec" name="kec" class="form-control" value="<?= $info_desa['nama_kec']?>" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="desa" class="form-label">Desa/Kelurahan</label>
-                        <input type="desa" id="desa" name="desa" class="form-control" value="<?= $info_desa['nama_desa']?>" disabled >
-                    </div>
+                    <div class="row pt-2">
+                        <div class="col-6">
+                            <label for="kec" class="form-label">Kecamatan</label>
+                            <input type="kec" id="kec" name="kec" class="form-control" value="<?= $info_desa['nama_kec']?>" disabled>
+                        </div>
+                        <div class="col-6">
+                            <label for="desa" class="form-label">Desa/Kelurahan</label>
+                            <input type="desa" id="desa" name="desa" class="form-control" value="<?= $info_desa['nama_desa']?>" disabled >
+                        </div>
+                    </div><br>
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat</label>
                         <textarea id="alamat" name="alamat" rows="4" cols="50" class="form-control" required><?php if($profil_desa){echo $profil_desa['alamat'];};?></textarea>

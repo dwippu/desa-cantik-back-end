@@ -121,9 +121,17 @@
             <li class="sidebar-item">
               <a class="sidebar-link <?php if (preg_match("/skagen$/", uri_string()) == 1) echo 'active' ?>" href="/skagen" aria-expanded="false">
                 <span>
-                  <i class="ti ti-receipt"></i>
+                  <i class="ti ti-checklist"></i>
                 </span>
                 <span class="hide-menu">SK Agen Statistik</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link <?php if (uri_string() == 'daftarskagenstatistik') echo 'active' ?>" href="/daftarskagenstatistik" aria-expanded="false">
+                <span>
+                  <i class="ti ti-receipt"></i>
+                </span>
+                <span class="hide-menu">Daftar Pengajuan SK</span>
               </a>
             </li>
             <?php endif ?>
@@ -134,7 +142,7 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
                 <span>
-                  <i class="ti ti-clipboard"></i>
+                  <i class="ti ti-clipboard-list"></i>
                 </span>
                 <span class="hide-menu">Laporan Pembinaan</span>
               </a>
