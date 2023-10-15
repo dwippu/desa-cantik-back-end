@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 class UsersModel extends Model
 {
     protected $table = 'Users';
+    protected $allowedFields    = ['username'];
+
     public function getAllUser(){
         $data = $this->builder()
             ->select(['auth_groups_users.user_id','username','secret','group','kode_desa', 'status', 'last_active'])
