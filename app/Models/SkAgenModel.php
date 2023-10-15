@@ -11,13 +11,19 @@ class SkAgenModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['id', 'user_id', 'kode_desa', 'nomor_sk', 'tanggal_sk', 'file', 'approval', 'tanggal_pengajuan', 'tanggal_konfirmasi', 'edit form'];
+    protected $allowedFields    = ['id', 'kode_desa', 'nomor_sk', 'tanggal_sk', 'file', 'last_edit'];
 
-    public function getRiwayat($kode_desa){
-        $data = $this->builder()
-            ->select(['sk_agen.id', 'sk_agen.user_id', 'users.username', 'kode_desa', 'nomor_sk', 'file', 'approval', 'tanggal_pengajuan', 'tanggal_konfirmasi'])
-            ->join('users', 'sk_agen.user_id=users.id')->where(['kode_desa'=>$kode_desa])
-            ->get()->getResultArray();
+    public function getSkAgen($kode_desa){
+        $data = $this->builder()->where(['kode_desa'=>$kode_desa])->get()->getResultArray();
         return $data;
+    }
+
+    public function cekNomorSk($nomor_sk){
+        $data = $this->builder()->where(['nomor_sk'=>$nomor_sk])->get();
+        if(is_null($data)){
+            return null;
+        }else{
+            return $data->getResultArray();
+        }
     }
 }
