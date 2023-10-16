@@ -221,8 +221,4 @@ class RegisterController extends BaseController
         $wil = new WilayahUserModel();
         $wil->setWilayah($user->id, $kode_wilayah);
     }
-
-    protected function editUserWilayah(User $user, string $kode_wilayah){
-        dd($kode_wilayah);
-    }
 }

@@ -67,9 +67,8 @@
                             </select>
                         </div>
 
-
                         <div class="d-grid col-12 col-md-8 mx-auto m-3">
-                            <button type="submit" class="btn btn-primary btn-block">Tambahkan Akun</button>
+                            <button type="submit" class="btn btn-primary btn-block">Simpan</button>
                         </div>
 
                     </form>
