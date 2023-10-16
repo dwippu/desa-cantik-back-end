@@ -1,11 +1,14 @@
-<?= $this->extend('template'); ?>
+<?php
+  if(auth()->user()->inGroup('adminkab')) {echo $this->extend('template');}
+  if(auth()->user()->inGroup('superadmin')) {echo $this->extend('superadmin_pages/superadmin_template');}
+?>
 
 <?= $this->Section('content'); ?>
 
 <div class="container-fluid">
     <div class="card" style="background-color:#5D87FF;">
     <div class="card-body">
-        <h2 class="fw-semibold mb-4 text-bg-primary">Edit Informasi Akun</h2>
+        <h2 class="fw-semibold mb-4 text-bg-primary">Buat Password Baru</h2>
         <div class="card">
         <div class="card-body">
 

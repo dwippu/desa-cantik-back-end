@@ -90,9 +90,14 @@ class Users extends BaseController
         }
 
         $wilayah = new WilayahUserModel();
-        $kode_kab = $wilayah->getWilayah(auth()->user()->id);
+        $kode_kab = $wilayah->getWilayah($user['user_id']);
         $kode_kab = substr($kode_kab,2,2);
-        return view('edit_user_kab', ['list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
+        if(auth()->user()->inGroup('adminkab')){
+            return view('edit_user', ['list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
+        } else if (auth()->user()->inGroup('superadmin')){
+            return view('edit_user', ['kab' => $desa->distinctKab(),'list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
+        }
+            
     }
 
     public function edit(){
@@ -347,3 +352,4 @@ class Users extends BaseController
         ];
     }
 }
+;

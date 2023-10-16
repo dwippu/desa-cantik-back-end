@@ -1,4 +1,7 @@
-<?= $this->extend('template'); ?>
+<?php
+  if(auth()->user()->inGroup('adminkab')) {echo $this->extend('template');}
+  if(auth()->user()->inGroup('superadmin')) {echo $this->extend('superadmin_pages/superadmin_template');}
+?>
 
 <?= $this->Section('content'); ?>
 
