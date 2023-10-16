@@ -83,8 +83,4 @@
     </div>
 </div>
 
-<?php if(session('errors') !== null): ?>
-    
-<?php endif ?>
-
 <?= $this->endSection() ?>

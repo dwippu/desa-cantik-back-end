@@ -71,6 +71,54 @@
     </div>
 </div>
 
+<?php  if (session('errors')): ?>
+<!-- Modals Nama sudah ada -->
+<p id="inValidName" hidden>in-valid name</p>
+<div class="modal fade" id="modalInValid" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div id="danger-delete">
+            <h5 class="modal-title"><?= session('errors') ?></h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger closeModal" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modals -->
+<?php  endif?>
+
+<?php  if (session('succes')): ?>
+<!-- Modals Nama sudah ada -->
+<p id="inValidName" hidden>in-valid name</p>
+<div class="modal fade" id="modalInValid" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div id="danger-delete">
+            <h5 class="modal-title"><?= session('succes') ?></h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger closeModal" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modals -->
+<?php  endif?>
+
 <!-- Modal View-->
 <div class="modal fade" id="modalView" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -195,8 +243,5 @@
     </div>
   </div>
 </div>
-<?php if(session('errors') !== null): ?>
-    <script type="text/javascript">alert("<?= session('errors') ?>")</script>
-<?php endif ?>
 
 <?= $this->endSection(); ?>

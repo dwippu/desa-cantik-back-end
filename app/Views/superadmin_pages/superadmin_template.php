@@ -114,7 +114,7 @@
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <li class="nav-item dropdown">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" style="background-color:#5d87ff;"
                   aria-expanded="false">
                   <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
@@ -128,7 +128,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       Super Admin
                       <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-check fs-6"></i>
+                      <i class="ti ti-map-pin fs-6"></i>
                       <p class="mb-0 fs-3"><?php helper('wilayah');
                         echo wilayah_user(auth()->user());
                        ?></p>

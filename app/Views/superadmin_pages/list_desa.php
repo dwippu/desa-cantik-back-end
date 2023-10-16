@@ -34,7 +34,6 @@
                                     <td><?=$row['nama_kab']?></td>
                                     <td><?=$row['nama_prov']?></td>
                                     <td>
-                                        <span><a class="btn btn-outline-primary rounded-pill">Edit</a></span>
                                         <span><a class="btn btn-outline-primary rounded-pill" href="http://localhost:8085/<?=$row['kode_desa']?>" target="_blank">Visit</a></span>
                                     </td>
                                 </tr>

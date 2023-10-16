@@ -85,7 +85,7 @@ class Users extends BaseController
             $kode_kab1 = substr($wilayah->getWilayah(auth()->user()->id),0,4);
             $kode_kab2 = substr($user['kode_desa'],0,4);
             if($kode_kab1 !== $kode_kab2){
-                return redirect()->back()->withInput()->with('errors', ['wrong-password' => 'Tidak dapat mengedit akun ini!']);
+                return redirect()->back()->withInput()->with('errors', 'Tidak dapat mengedit akun ini!');
             }
         }
 
@@ -113,7 +113,7 @@ class Users extends BaseController
             $kode_kab1 = substr($wilayah->getWilayah(auth()->user()->id),0,4);
             $kode_kab2 = substr($user['kode_desa'],0,4);
             if($kode_kab1 !== $kode_kab2){
-                return redirect()->to('/users')->withInput()->with('errors', ['wrong-password' => 'Tidak dapat mengedit akun ini!']);
+                return redirect()->to('/users')->withInput()->with('errors','Tidak dapat mengedit akun ini!');
             }
         }
 
@@ -142,7 +142,7 @@ class Users extends BaseController
             if(!$this->validate($this->getValidationEmail())){
                 $validation = \Config\Services::validation();
                 session()->setFlashdata('validation', $validation->getErrors());
-                return redirect()->back()->withInput();
+                return redirect()->back()->withInput('errors', $validation->getError('email'));
             };
         }
 
@@ -165,7 +165,11 @@ class Users extends BaseController
             ])){
             $validation = \Config\Services::validation();
             session()->setFlashdata('validation', $validation->getErrors());
-            return redirect()->back()->withInput();
+            foreach($validation->getErrors() as $eror){
+                $error = $eror;
+                break;
+            }
+            return redirect()->back()->with('errors', $error);
         };
         $this->model->update($pos['id'], ['username'=>$pos['username']]);
 
@@ -217,7 +221,7 @@ class Users extends BaseController
         
         if($user->isBanned()){
             $user->unBan();
-            return redirect()->back()->withInput()->with('errors', 'Akun Berhasil Diaktifkan Kembali!');
+            return redirect()->back()->withInput()->with('succes', 'Akun Berhasil Diaktifkan Kembali!');
         }
         $user->ban('Akun dinonaktifkan oleh Admin Kabupaten. Hubungi Admin untuk membuka kembali');
         return redirect()->back()->withInput()->with('succes', 'Akun Berhasil Dinonaktifkan!');
@@ -304,8 +308,10 @@ class Users extends BaseController
             ],
             ])){
             $validation = \Config\Services::validation();
-            session()->setFlashdata('validation', $validation->getErrors());
-            return redirect()->to('/users');
+            // session()->setFlashdata('validation', $validation->getErrors());
+            $eror = ($validation->getError('password')) ? $validation->getError('password') : $validation->getError('password_confirm');
+            // dd($eror);
+            return redirect()->to('/users')->with('errors', $eror);
         };
         
         $provider = model(setting('Auth.userProvider'));

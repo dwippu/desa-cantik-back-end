@@ -220,7 +220,7 @@
                         };
                       ?>
                       <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-check fs-6"></i>
+                      <i class="ti ti-map-pin fs-6"></i>
                       <p class="mb-0 fs-3"><?php helper('wilayah');
                         echo wilayah_user(auth()->user());
                        ?></p>
