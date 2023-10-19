@@ -65,7 +65,6 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">STRUKTUR DESA</span>
             </li>
-            <?php if(auth()->user()->inGroup('operator')): ?>
             <li class="sidebar-item">
               <a class="sidebar-link <?php if (preg_match("/strukturdesa$/", uri_string()) == 1) echo 'active' ?>" href="/strukturdesa" aria-expanded="false">
                 <span>
@@ -74,13 +73,12 @@
                 <span class="hide-menu">Struktur Desa</span>
               </a>
             </li>
-            <?php endif ?>
             <li class="sidebar-item">
               <a class="sidebar-link <?php if (strcmp(uri_string(), "daftarpengajuanstruktur") == 0) echo 'active' ?>" href="/daftarpengajuanstruktur" aria-expanded="false">
                 <span>
                   <i class="ti ti-cards"></i>
                 </span>
-                <span class="hide-menu">Daftar Pengajuan</span>
+                <span class="hide-menu">Daftar Pengajuan Struktur</span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -109,7 +107,7 @@
             </li>
             <?php if(auth()->user()->inGroup('adminkab')): ?>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+              <a class="sidebar-link" href="/skpembina" aria-expanded="false">
                 <span>
                   <i class="ti ti-file-description"></i>
                 </span>
@@ -117,7 +115,7 @@
               </a>
             </li>
             <?php endif ?>
-            <?php if(auth()->user()->inGroup('operator', 'verifikator')): ?>
+            <?php if(auth()->user()->inGroup('operator', 'verifikator', 'adminkab')): ?>
             <li class="sidebar-item">
               <a class="sidebar-link <?php if (preg_match("/skagen$/", uri_string()) == 1) echo 'active' ?>" href="/skagen" aria-expanded="false">
                 <span>
@@ -140,19 +138,19 @@
               <span class="hide-menu">LAPORAN</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <a class="sidebar-link <?php if (uri_string() == 'daftarlaporan') echo 'active' ?>" href="/laporanbulanan" aria-expanded="false">
                 <span>
-                  <i class="ti ti-clipboard-list"></i>
+                  <i class="ti ti-checkup-list"></i>
                 </span>
-                <span class="hide-menu">Laporan Pembinaan</span>
+                <span class="hide-menu">Laporan Bulanan</span>
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+              <a class="sidebar-link <?php if (uri_string() == 'daftarpengajuanlaporan') echo 'active' ?>" href="/daftarpengajuanlaporan" aria-expanded="false">
                 <span>
-                  <i class="ti ti-cards"></i>
+                  <i class="ti ti-clipboard-list"></i>
                 </span>
-                <span class="hide-menu">Laporan Bulanan</span>
+                <span class="hide-menu">Daftar Pengajuan Laporan</span>
               </a>
             </li>
             <?php if (auth()->user()->inGroup('adminkab')): ?>
@@ -201,7 +199,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" style="background-color:#5d87ff;"
                   aria-expanded="false">
-                  <img src="/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="/assets/images/logos/def pic.png" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -240,7 +238,7 @@
         <?= $this->renderSection('content'); ?>
 
         <div class="py-6 px-6 text-center">
-          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
+          <p class="mb-0 fs-4">&copy; Tim Desa Cantik, All Right Reserved. Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
         </div>
       </div>
     </div>

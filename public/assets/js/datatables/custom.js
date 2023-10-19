@@ -24,6 +24,7 @@ $(document).ready(function(){
         $('#modalView').modal('hide');
         $('#modalInValid').modal('hide');
         $('#modalHapusSk').modal('hide');
+        $('#modalHapusLaporan').modal('hide');
     });
 
     // Modal Profile
@@ -42,6 +43,7 @@ $(document).ready(function(){
         tutupModal();
     });
 
+    // View profile
     $(document).on('click', '#btnViewProfile', function(){
         var id = $(this).attr('data-id');
         $('#modalView').modal('show');
@@ -209,7 +211,7 @@ $(document).ready(function(){
         $('.input-kode-desa').empty();
         var jml = $(this).val();
         for (let i = 0; i < jml; i++){
-            $('.input-kode-desa').prepend('<div class="col-3 pt-2"><input name="kode_desa" type="text" class="form-control kode-desa"></div>');
+            $('.input-kode-desa').prepend('<div class="col-3 pt-2"><input name="kode_desa[]" type="text" class="form-control kode-desa"></div>');
         }
     })
     $('#jumlahdescan').change(function(){
@@ -284,7 +286,7 @@ $(document).ready(function(){
         $('#modalAktif').modal('show');
     });
 
-    // View SK
+    // View SK Agen
     $(document).on('click', '#btnViewSk', function(){
         var file = $(this).attr('data-file');
         var no_sk = $(this).attr('data-sk');
@@ -329,7 +331,7 @@ $(document).ready(function(){
 
     });
 
-    // Hapus SK
+    // Hapus SK Agen
     $(document).on('click', '#btnHapusSk', function(){
         var id = $(this).attr('data-id');
         $('form').attr('action', '/hapusskagen/'+id);
@@ -345,6 +347,89 @@ $(document).ready(function(){
         $('#modalCancel').modal('show');
     });
 
+    // View laporan
+    $(document).on('click', '#btnViewLaporan', function(){
+        var id = $(this).attr('data-id');
+        $('#modalView').modal('show');
+        $.ajax({
+            method: "GET",
+            url: "/laporanbulanan/"+id,
+            success: function(response){
+                document.getElementById("file_view").src = "../Laporan/"+response.laporan['file'];
+                $("#namalaporan").text("Laporan Bulanan - "+response.laporan['nama_kegiatan']);
+                $("#nama_kegiatan").val(response.laporan['nama_kegiatan']);
+                $("#peserta_kegiatan").val(response.laporan['peserta_kegiatan']);
+                $("#tanggal_kegiatan").val(response.laporan['tanggal_kegiatan']);
+            }
+        });
+    });
+
+    // View Pengajuan laporan
+    $(document).on('click', '#btnViewLaporanPengajuan', function(){
+        var id = $(this).attr('data-id');
+        var keterangan = $(this).attr('data-keterangan');
+        $('#keteranganView').val(keterangan);
+        $('#modalView').modal('show');
+        $.ajax({
+            method: "GET",
+            url: "/daftarpengajuanlaporan/"+id,
+            success: function(response){
+                document.getElementById("file_view").src = "../Laporan/"+response.laporan['file'];
+                $("#namalaporan").text("Laporan Bulanan - "+response.laporan['nama_kegiatan']);
+                $("#nama_kegiatan").val(response.laporan['nama_kegiatan']);
+                $("#peserta_kegiatan").val(response.laporan['peserta_kegiatan']);
+                $("#tanggal_kegiatan").val(response.laporan['tanggal_kegiatan']);
+                if (response.laporan['tanggal_konfirmasi']!=null){
+                    $('#setujui').prop('disabled', true);
+                    $('#tolak').prop('disabled', true);
+                }else{
+                    $('#setujui').prop('disabled', false);
+                    $('#tolak').prop('disabled', false);
+                };
+            }
+        });
+
+        $('#setujui').click(function(e){
+            $('form').attr('action', '/setujuilaporan/'+id);
+        });
+
+        $('#tolak').click(function(e){
+            $('form').attr('action', '/tolaklaporan/'+id);
+        });
+    });
+
+    // Modal Cancel Laporan
+    $(document).on('click', '#btnCancelLaporan', function(){
+        var id = $(this).attr('data-id');
+        var keterangan = $(this).attr('data-keterangan');
+        $('#keteranganCancel').val(keterangan);
+        $('form').attr('action', '/daftarpengajuanlaporan/'+id);
+        $('#modalCancel').modal('show');
+    });
+
+    // Hapus Laporan
+    $(document).on('click', '#btnHapusLaporan', function(){
+        var id = $(this).attr('data-id');
+        $('form').attr('action', '/hapuslaporan/'+id);
+        $('#modalHapusLaporan').modal('show');
+    });
+
+    // View SK Laporan
+    $(document).on('click', '#btnViewSkPembina', function(){
+        var file = $(this).attr('data-file');
+        var no_sk = $(this).attr('data-sk');
+        document.getElementById("fileSkAgen").src = "../SK Pembina/"+file;
+        $('#namaSK').text(no_sk);
+        $('#modalView').modal('show');
+
+    });
+
+    // Hapus SK Laporan
+    $(document).on('click', '#btnHapusSkPembina', function(){
+        var id = $(this).attr('data-id');
+        $('form').attr('action', '/hapusskpembina/'+id);
+        $('#modalHapusSk').modal('show');
+    });
 
 });
 
@@ -360,8 +445,8 @@ function previewImg(){
 };
 
 function previewpdf(){
-    const pdf = document.querySelector('#file_sk');
-    const pdfPrev = document.querySelector('#fileSkAgen');
+    const pdf = document.querySelector('#file_pdf');
+    const pdfPrev = document.querySelector('#file_view');
     const fileFoto = new FileReader();
     fileFoto.readAsDataURL(pdf.files[0]);
     fileFoto.onload = function(e){

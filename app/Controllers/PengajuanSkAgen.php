@@ -50,6 +50,8 @@ class PengajuanSkAgen extends BaseController
         $sk_agen = new SkAgenModel();
         if($sk_agen->cekNomorSk($this->request->getVar('no_sk'))!=null){
             session()->setFlashdata('validation', 'File SK Sudah Ada');
+        }elseif($sk->cekNomorSk($this->request->getVar('no_sk'))!=null){
+            session()->setFlashdata('validation', 'File SK Sudah Diajukan');
         }else{
             $file_sk = $this->request->getFile('file_sk');
             $file_sk->move('SK Agen');

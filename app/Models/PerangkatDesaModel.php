@@ -100,4 +100,13 @@ class PerangkatDesaModel extends Model
             return $data->getResultArray();
         }
     }
+
+    function getPerangkatByKab($kode_kab){
+        $data = $this->db->table('perangkat_desa')->where(['aktif !='=>'NULL'])->like('kode_desa', $kode_kab, 'after')->orderBy('aktif ASC')->get();
+        if (is_null($data)) {
+            return null;
+        } else {
+            return $data->getResultArray();
+        }
+    }
 }
