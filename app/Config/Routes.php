@@ -65,6 +65,10 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->get('/skdescan', 'SkDescan::index');
         $routes->get('/uploadskdescan', 'SkDescan::uploadview');
         $routes->post('/uploadskdescan', 'SkDescan::uploadpost');
+        $routes->delete('/hapusskdescan/(:num)', 'SkDescan::hapus/$1');
+        $routes->get('/editskdescan/(:num)', 'SkDescan::edit/$1');
+        $routes->post('/editskdescan/(:num)', 'SkDescan::editaction/$1');
+        $routes->post('/nonaktifdescan', 'ListDesa::nonaktif');
     });
 });
 
