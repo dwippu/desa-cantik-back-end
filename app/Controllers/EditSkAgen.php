@@ -56,7 +56,7 @@ class EditSkAgen extends BaseController
         $nama_file = $this->request->getVar('skLama');
         $file_sk = $this->request->getFile('file_sk');
         if(($file_sk->isValid())==true){
-            $file_sk->move('Foto Perangkat');
+            $file_sk->move('SK Agen');
             $nama_file = $file_sk->getName();
         };
 

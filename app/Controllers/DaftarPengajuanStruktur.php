@@ -50,11 +50,12 @@ class DaftarPengajuanStruktur extends BaseController
 
         $approval="";
         $aktif="Aktif";
+        $perangkat_pengajuan = $perangkat->find($id);
         $jabatan=$this->request->getVar('jabatan');
         if ($this->request->getVar('keterangan') == "Penambahan Diajukan"){
             $approval="Penambahan Disetujui";
             if($jabatan!="Agen Statistik"){
-                $lastPerangkat = $perangkat->getLastActiveByJabatan(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $jabatan);
+                $lastPerangkat = $perangkat->getLastActiveByJabatan($perangkat_pengajuan['kode_desa'], $jabatan);
                 if ($lastPerangkat!=null){
                     $perangkat->update($lastPerangkat[0]['id'],[
                         'aktif' => 'Tidak Aktif'
@@ -67,7 +68,7 @@ class DaftarPengajuanStruktur extends BaseController
             $perangkat_lama = $perangkat->find($edit_from);
             $perangkat->update($edit_from, ['aktif'=>null]);
             if($jabatan!="Agen Statistik"){
-                $lastPerangkat = $perangkat->getLastActiveByJabatan(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $jabatan);
+                $lastPerangkat = $perangkat->getLastActiveByJabatan($perangkat_pengajuan['kode_desa'], $jabatan);
                 if ($lastPerangkat!=null){
                     $perangkat->update($lastPerangkat[0]['id'],[
                         'aktif' => 'Tidak Aktif'
@@ -77,7 +78,7 @@ class DaftarPengajuanStruktur extends BaseController
         }elseif ($this->request->getVar('keterangan') == "Aktifkan Diajukan"){
             $approval="Aktifkan Disetujui";
             if($jabatan!="Agen Statistik"){
-                $lastPerangkat = $perangkat->getLastActiveByJabatan(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $jabatan);
+                $lastPerangkat = $perangkat->getLastActiveByJabatan($perangkat_pengajuan['kode_desa'], $jabatan);
                 if ($lastPerangkat!=null){
                     $perangkat->update($lastPerangkat[0]['id'],[
                         'aktif' => 'Tidak Aktif'
@@ -89,7 +90,7 @@ class DaftarPengajuanStruktur extends BaseController
             $aktif="Tidak Aktif";
         };
 
-        $lastPerangkat = $perangkat->getLastActive(($wilayah->find($user->getWilayah(auth()->getUser()->id)))['kode_desa'], $this->request->getVar('nama'), $this->request->getVar('jabatan'));
+        $lastPerangkat = $perangkat->getLastActive($perangkat_pengajuan['kode_desa'], $this->request->getVar('nama'), $this->request->getVar('jabatan'));
         if ($lastPerangkat!=null){
             $perangkat->update($lastPerangkat['id'],[
                 'aktif' => null

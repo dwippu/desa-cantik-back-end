@@ -21,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>Pemohon</th>
-                                    <th>Nama Desa</th>
+                                    <th>Kode Desa</th>
                                     <th>Nomor SK</th>
                                     <th>Keterangan</th>
                                     <th>Tanggal Pengajuan</th>
@@ -36,7 +36,7 @@
                                 <?php foreach ($sk_agen as $row):?>
                                     <tr>
                                         <td><?=$row['username']?></td>
-                                        <td><?=$desa['nama_desa']?></td>
+                                        <td><?=$row['kode_desa']?></td>
                                         <td><?=$row['nomor_sk']?></td>
                                         <td><?php if (str_contains($row['approval'],'Disetujui')){
                                                     echo '<span class="badge bg-success rounded-3 fw-semibold">',$row['approval'],'</span>';
@@ -115,7 +115,7 @@
                 </div><br>
                 <embed id="fileSkAgen" type="application/pdf" width="100%" height="600px"></embed>
                 <input type="hidden" id="keteranganView" name="keterangan">
-                <?php if (auth()->user()->inGroup('verifikator')): ?>
+                <?php if (auth()->user()->inGroup('verifikator', 'adminkab')): ?>
                 <div class="modal-footer">
                     <button id="setujui" type="submit" class="btn btn-success">Setujui</button>
                     <button id="tolak" type="submit" class="btn btn-danger">Tolak</button>

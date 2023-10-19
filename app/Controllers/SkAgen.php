@@ -16,8 +16,12 @@ class SkAgen extends BaseController
         $user = new WilayahUserModel();
         $wilayah = new WilayahModel();
         $kode_desa = $user->getWilayah(auth()->getUser()->id);
-        $sk_agen = $sk->getSkAgen($kode_desa);
-
+        if(auth()->user()->inGroup('adminkab')){
+            $kode_kab = substr($kode_desa,0,4);
+            $sk_agen = $sk->getSkAgenBykab($kode_kab);
+        }else{
+            $sk_agen = $sk->getSkAgen($kode_desa);
+        }
         $data = ['sk_agen'=>$sk_agen];
         return view('sk_agen', $data);
     }

@@ -18,6 +18,11 @@ class SkAgenModel extends Model
         return $data;
     }
 
+    public function getSkAgenByKab($kode_kab){
+        $data = $this->builder()->like('kode_desa', $kode_kab, 'after')->get()->getResultArray();
+        return $data;
+    }
+
     public function cekNomorSk($nomor_sk){
         $data = $this->builder()->where(['nomor_sk'=>$nomor_sk])->get();
         if(is_null($data)){

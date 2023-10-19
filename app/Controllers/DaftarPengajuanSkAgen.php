@@ -16,12 +16,19 @@ class DaftarPengajuanSkAgen extends BaseController
         $user = new WilayahUserModel();
         $wilayah = new WilayahModel();
         $kode_desa = $user->getWilayah(auth()->getUser()->id);
-        $sk_agen = $sk->getRiwayat($kode_desa);
-        $desa = $wilayah->find($kode_desa);
-
-        $data = ['sk_agen'=>$sk_agen, 'desa'=>$desa];
+        if(auth()->user()->inGroup('adminkab')){
+            $kode_kab = substr($kode_desa,0,4);
+            $sk_agen = $sk->getRiwayatByKab($kode_kab);
+        }elseif(auth()->user()->inGroup('verifikator')){
+            $sk_agen = $sk->getRiwayatByDesa($kode_desa);
+        }
+        else{
+            $sk_agen = $sk->getRiwayatByOpr($kode_desa, auth()->getUser()->id);
+        }
+        $data = ['sk_agen'=>$sk_agen];
         return view('daftar_pengajuan_sk_agen', $data);
     }
+
     public function view($id){
         $sk = new PengajuanSkAgenModel();
         $sk_view = $sk->find($id);
@@ -31,8 +38,13 @@ class DaftarPengajuanSkAgen extends BaseController
 
     public function delete($id){
         $sk = new PengajuanSkAgenModel();
+        $sk_agen = new SkAgenModel();
         if ($this->request->getVar('keterangan') == "SK Diajukan"){
             unlink('SK Agen/'.(($sk->find($id))['file']));
+        }elseif ($this->request->getVar('keterangan') == "Perubahan SK Diajukan"){
+            if(($sk_agen->find(($sk->find($id))['id_sk']))['file'] != ($sk->find($id))['file']){
+                unlink('SK Agen/'.(($sk->find($id))['file']));
+            }
         }
         $sk->delete($id);
         return redirect('daftarskagenstatistik');
@@ -65,6 +77,7 @@ class DaftarPengajuanSkAgen extends BaseController
                 'file' => $pengajuan['file'],
                 'last_edit' => date('Y-m-d H:i:s')
             ]);
+            $id_sk=$pengajuan['id_sk'];
         }elseif ($this->request->getVar('keterangan') == "Hapus SK Diajukan"){
             $id_sk = $pengajuan['id_sk'];
             unlink('SK Agen/'.($pengajuan['file']));

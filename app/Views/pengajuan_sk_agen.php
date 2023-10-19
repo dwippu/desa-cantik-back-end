@@ -42,13 +42,13 @@
                         </div>
                         <div class="col-6">
                             <label for="file_sk" class="form-label">Upload SK Agen</label>
-                            <input class="form-control <?php  if (session('validation')){if (array_key_exists("file_sk", session('validation'))) {echo 'is-invalid';};};?>" id="file_sk" name="file_sk" type="file" onchange="previewpdf()">
+                            <input class="form-control <?php  if (session('validation')){if (array_key_exists("file_sk", session('validation'))) {echo 'is-invalid';};};?>" id="file_pdf" name="file_sk" type="file" onchange="previewpdf()">
                             <div class="invalid-feedback"><?php  if (session('validation')){if (array_key_exists("file_sk", session('validation'))) {echo (session('validation')['file_sk']);};};?></div>
                         </div>
                     </div><br>
                     <button type="submit" class="btn btn-primary">Submit</button><br><br>
                     <label class="form-label">Preview SK Agen</label>
-                    <embed id="fileSkAgen" type="application/pdf" width="100%" height="600px" style="border-style: solid;"></embed>
+                    <embed id="file_view" type="application/pdf" width="100%" height="600px" style="border-style: solid;"></embed>
                 
                 </form>
             </div>
