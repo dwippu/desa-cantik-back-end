@@ -159,16 +159,8 @@ $(document).ready(function(){
         if (isi == 'Ya'){
             $(this).text(isi2)
         }
-        if (isi == 'Nonaktifkan Akun'){
+        if (isi == isi2){
             $('#user_id_delete').val(id);
-            if($('#old_password').val() == ""){
-                alert('Password Harus Diisi');
-            }
-            else{
-                $('#form-delete-user').submit();
-            }
-        } else if (isi == 'Aktifkan Akun'){
-            $('#user_id_delete').val(id)
             if($('#old_password').val() == ""){
                 alert('Password Harus Diisi');
             }
@@ -223,6 +215,14 @@ $(document).ready(function(){
         for (let i = 0; i < jml; i++){
             $('.input-kode-desa').prepend('<div class="col-3 pt-2"><input name="kode_desa[]" type="text" class="form-control kode-desa" required></div>');
         }
+    })
+    
+    //edit list descan
+    $('#tambah_descan').click(function (){
+        $('<div class="col-3 pt-2"><input name="kode_desa[]" type="text" class="form-control kode-desa" required></div>').insertBefore('#tambah_kurang_list');
+    })
+    $('#pop_descan').click(function (){
+        $('#tambah_kurang_list').prev().remove();
     })
 
     // Modal Struktur Desa
@@ -288,9 +288,15 @@ $(document).ready(function(){
 
     // View SK Agen
     $(document).on('click', '#btnViewSk', function(){
+        var url = window.location.href;
         var file = $(this).attr('data-file');
         var no_sk = $(this).attr('data-sk');
-        document.getElementById("fileSkAgen").src = "../SK Agen/"+file;
+        var endurl = url.split("/").pop();
+        if (endurl == 'skagen'){
+            document.getElementById("fileSkAgen").src = "../SK Agen/"+file;
+        } else if (endurl == 'skdescan'){
+            document.getElementById("fileSkAgen").src = "../SK Descan/"+file;
+        }
         $('#namaSK').text(no_sk);
         $('#modalView').modal('show');
 
@@ -346,6 +352,29 @@ $(document).ready(function(){
         $('form').attr('action', '/daftarskagenstatistik/'+id);
         $('#modalCancel').modal('show');
     });
+
+    //hapus sk descan
+    $(document).on('click', '#btnHapusSkdescan', function(){
+        var id = $(this).attr('data-id');
+        $('#hapusskdescan').attr('action', '/hapusskdescan/'+id);
+        $('#modalHapusSk').modal('show');
+    });
+
+    $('#delactionsk').click(function(){
+        var isi = $('#delactionsk').text();
+        var isi2 = $('#btnHapusSkdescan').text();
+        $('.pass-collapse').addClass('show')
+        if (isi == 'Ya'){
+            $(this).text(isi2)
+        } else {
+            if($('#old_password').val() == ""){
+                alert('Password Harus Diisi');
+            }
+            else{
+                $('#hapusskdescan').submit();
+            }
+        }
+    })
 
     // View laporan
     $(document).on('click', '#btnViewLaporan', function(){

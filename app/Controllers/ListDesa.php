@@ -25,6 +25,20 @@ class ListDesa extends BaseController
         return $this->response->setJSON($descan);
     }
 
+    public function nonaktif(){
+        helper('oldpassword');
+
+        $pass = $this->request->getPost('old-password');
+        if (!old_password_is_correct($pass)){
+            return redirect()->back()->withInput()->with('errors', 'Password Salah!');
+        };
+
+        $desa = new WilayahModel();
+        $desa->update($this->request->getPost('kode_desa'), ['descan'=>0]);
+        
+        return redirect()->to('/listdesa')->with('succes', 'Status Desa Cantik Berhasil Dihapus!');
+    }
+
     public function coba(){
         dd($this->request->getPost());
     }
