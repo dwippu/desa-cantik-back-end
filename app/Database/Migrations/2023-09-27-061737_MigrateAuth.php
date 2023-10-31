@@ -162,7 +162,7 @@ class CreateAuthTables extends Migration
             'descan'         => ['type' => 'int', 'constraint' => 1, 'null' => false]
         ]);
         $this->forge->addPrimaryKey('kode_desa');
-        $this->forge->createTable($this->tables['wilayah']);
+        $this->forge->createTable('wilayah');
 
         // sk_pembina Table
         $this->forge->addField([
@@ -174,7 +174,7 @@ class CreateAuthTables extends Migration
             'last_edit'      => ['type' => 'datetime', 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['sk_pembina']);
+        $this->forge->createTable('sk_pembina');
 
         // sk_descan Table
         $this->forge->addField([
@@ -182,12 +182,12 @@ class CreateAuthTables extends Migration
             'nomor_sk'       => ['type' => 'varchar', 'constraint' => 100, 'null' => false],
             'tanggal_sk'     => ['type' => 'date', 'null' => false],
             'file'           => ['type' => 'varchar', 'constraint' => 100, 'null' => false],
-            'list_descan'    => ['type' => 'logtext', 'null' => false],
+            'list_descan'    => ['type' => 'longtext', 'null' => false],
             'tanggal_upload' => ['type' => 'datetime', 'null' => true],
             'status'         => ['type' => 'varchar', 'constraint' => 15, 'null' => false]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['sk_descan']);
+        $this->forge->createTable('sk_descan');
 
         // sk_agen Table
         $this->forge->addField([
@@ -199,7 +199,7 @@ class CreateAuthTables extends Migration
             'last_edit'      => ['type' => 'datetime', 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['sk_agen']);
+        $this->forge->createTable('sk_agen');
 
         // profil_desa Table
         $this->forge->addField([
@@ -216,7 +216,7 @@ class CreateAuthTables extends Migration
             'tanggal_konfirmasi' => ['type' => 'datetime', 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['profil_desa']);
+        $this->forge->createTable('profil_desa');
 
         // perangkat_desa Table
         $this->forge->addField([
@@ -235,7 +235,7 @@ class CreateAuthTables extends Migration
             'edit_from'          => ['type' => 'int', 'constraint' => 11, 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['perangkat_desa']);
+        $this->forge->createTable('perangkat_desa');
 
         // pengajuan_sk_agen Table
         $this->forge->addField([
@@ -251,7 +251,7 @@ class CreateAuthTables extends Migration
             'tanggal_konfirmasi' => ['type' => 'datetime', 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['pengajuan_sk_agen']);
+        $this->forge->createTable('pengajuan_sk_agen');
 
         // pengajuan_laporan_bulanan Table
         $this->forge->addField([
@@ -268,7 +268,7 @@ class CreateAuthTables extends Migration
             'tanggal_konfirmasi' => ['type' => 'datetime', 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['pengajuan_laporan_bulanan']);
+        $this->forge->createTable('pengajuan_laporan_bulanan');
 
         // laporan_bulanan Table
         $this->forge->addField([
@@ -280,7 +280,21 @@ class CreateAuthTables extends Migration
             'last_edit'        => ['type' => 'datetime', 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable($this->tables['laporan_bulanan']);
+        $this->forge->createTable('laporan_bulanan');
+
+        // settings Table
+        $this->forge->addField([
+            'id'               => ['type' => 'int', 'constraint' => 9, 'unsigned' => true, 'auto_increment' => true],
+            'class'            => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
+            'key'              => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
+            'value'            => ['type' => 'text', 'null' => true, 'default' => NULL],
+            'type'             => ['type' => 'varchar', 'constraint' => 31, 'null' => false, 'default' => 'string'],
+            'context'          => ['type' => 'varchar', 'constraint' => 255, 'null' => true, 'default' => NULL],
+            'created_at'        => ['type' => 'datetime', 'null' => false],
+            'updated_at'        => ['type' => 'datetime', 'null' => false]
+        ]);
+        $this->forge->addPrimaryKey('id');
+        $this->forge->createTable('settings');
 
 
     }
@@ -298,15 +312,16 @@ class CreateAuthTables extends Migration
         $this->forge->dropTable($this->tables['groups_users'], true);
         $this->forge->dropTable($this->tables['permissions_users'], true);
         $this->forge->dropTable($this->tables['users'], true);
-        $this->forge->dropTable($this->tables['wilayah'], true);
-        $this->forge->dropTable($this->tables['sk_pembina'], true);
-        $this->forge->dropTable($this->tables['sk_descan'], true);
-        $this->forge->dropTable($this->tables['sk_agen'], true);
-        $this->forge->dropTable($this->tables['profil_desa'], true);
-        $this->forge->dropTable($this->tables['perangkat_desa'], true);
-        $this->forge->dropTable($this->tables['pengajuan_sk_agen'], true);
-        $this->forge->dropTable($this->tables['pengajuan_laporan_bulanan'], true);
-        $this->forge->dropTable($this->tables['laporan_bulanan'], true);
+        $this->forge->dropTable('wilayah', true);
+        $this->forge->dropTable('sk_pembina', true);
+        $this->forge->dropTable('sk_descan', true);
+        $this->forge->dropTable('sk_agen', true);
+        $this->forge->dropTable('profil_desa', true);
+        $this->forge->dropTable('perangkat_desa', true);
+        $this->forge->dropTable('pengajuan_sk_agen', true);
+        $this->forge->dropTable('pengajuan_laporan_bulanan', true);
+        $this->forge->dropTable('laporan_bulanan', true);
+        $this->forge->dropTable('settings', true);
 
         $this->db->enableForeignKeyChecks();
     }
