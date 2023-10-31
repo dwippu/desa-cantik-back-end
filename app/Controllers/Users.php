@@ -27,7 +27,7 @@ class Users extends BaseController
         };
         $list = $this->model->getAllUser();
         $data = ['list' => $list];
-        return view('list_user', $data);
+        return view('users/list_user', $data);
     }
 
     protected function adminKabPage()
@@ -37,7 +37,7 @@ class Users extends BaseController
         $kode_kab=substr($kode_desa,0,4);
         $list = $this->model->getAllUserByKab($kode_kab);
         $data = ['list' => $list];
-        return view('list_user', $data);
+        return view('users/list_user', $data);
     }
 
     public function detail($id){
@@ -93,9 +93,9 @@ class Users extends BaseController
         $kode_kab = $wilayah->getWilayah($user['user_id']);
         $kode_kab = substr($kode_kab,2,2);
         if(auth()->user()->inGroup('adminkab')){
-            return view('edit_user', ['list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
+            return view('users/edit_user', ['list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
         } else if (auth()->user()->inGroup('superadmin')){
-            return view('edit_user', ['kab' => $desa->distinctKab(),'list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
+            return view('users/edit_user', ['kab' => $desa->distinctKab(),'list' => $desa->findDescanByKab($kode_kab), 'user' => $user]);
         }
             
     }
@@ -264,7 +264,7 @@ class Users extends BaseController
             }
         }
 
-        return view('change_password', ['old_password'=>$pass, 'id' => $this->request->getPost('user_id')]);
+        return view('users/change_password', ['old_password'=>$pass, 'id' => $this->request->getPost('user_id')]);
     }
 
     public function resetPasswordAction(){

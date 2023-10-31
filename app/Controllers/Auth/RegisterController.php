@@ -72,13 +72,13 @@ class RegisterController extends BaseController
         $desa = new WilayahModel();
 
         if (auth()->user()->inGroup('superadmin')){
-            return $this->view('superadmin_pages/register', ['kab' => $desa->distinctKab()]);
+            return $this->view('users/register', ['kab' => $desa->distinctKab()]);
         }
         
         $wilayah = new WilayahUserModel();
         $kode_kab = $wilayah->getWilayah(auth()->user()->id);
         $kode_kab = substr($kode_kab,2,2);
-        return $this->view('register_kab', ['list' => $desa->findDescanByKab($kode_kab)]);
+        return $this->view('users/register_kab', ['list' => $desa->findDescanByKab($kode_kab)]);
     }
 
     /**
