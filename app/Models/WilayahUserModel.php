@@ -6,6 +6,8 @@ use CodeIgniter\Shield\Models\GroupModel;
 
 class WilayahUserModel extends GroupModel
 {
+    protected $allowedFields = ['kode_desa'];
+
     /**
      * @param String|int $id dari user yang akan diubah wilayahnya
      * @param String $wilayah kode desa yang yang baru
