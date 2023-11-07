@@ -63,8 +63,8 @@ $routes->group('',['filter' => 'session'], function ($routes) {
         $routes->post('/tolakprofile/(:any)', 'ProfilDesa\ProfileDesa::tolak/$1');
         $routes->post('/setujuistruktur/(:any)', 'StrukturDesa\DaftarPengajuanStruktur::setujui/$1');
         $routes->post('/tolakstruktur/(:any)', 'StrukturDesa\DaftarPengajuanStruktur::tolak/$1');
-        $routes->post('/setujuiskagen/(:any)', 'StrukturDesa\DaftarPengajuanSkAgen::setujui/$1');
-        $routes->post('/tolakskagen/(:any)', 'StrukturDesa\DaftarPengajuanSkAgen::tolak/$1');
+        $routes->post('/setujuiskagen/(:any)', 'SkAgen\DaftarPengajuanSkAgen::setujui/$1');
+        $routes->post('/tolakskagen/(:any)', 'SkAgen\DaftarPengajuanSkAgen::tolak/$1');
         $routes->post('/setujuilaporan/(:any)', 'Laporan\DaftarPengajuanLaporanBulanan::setujui/$1');
         $routes->post('/tolaklaporan/(:any)', 'Laporan\DaftarPengajuanLaporanBulanan::tolak/$1');
     });

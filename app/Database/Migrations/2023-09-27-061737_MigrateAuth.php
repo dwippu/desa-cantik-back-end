@@ -130,7 +130,7 @@ class CreateAuthTables extends Migration
             'id'         => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
             'user_id'    => ['type' => 'int', 'constraint' => 11, 'unsigned' => true],
             'group'      => ['type' => 'varchar', 'constraint' => 255, 'null' => false],
-            'kode_desa'  => ['type' => 'varchar', 'constraint' => 9, 'null' => true],
+            'kode_desa'  => ['type' => 'varchar', 'constraint' => 10, 'null' => true],
             'created_at' => ['type' => 'datetime', 'null' => false],
         ]);
         $this->forge->addPrimaryKey('id');
@@ -277,6 +277,7 @@ class CreateAuthTables extends Migration
             'nama_kegiatan'    => ['type' => 'varchar', 'constraint' => 100, 'null' => false],
             'tanggal_kegiatan' => ['type' => 'date', 'null' => false],
             'peserta_kegiatan' => ['type' => 'text', 'null' => false],
+            'file'             => ['type' => 'varchar', 'constraint' => 100, 'null' => false],
             'last_edit'        => ['type' => 'datetime', 'null' => true]
         ]);
         $this->forge->addPrimaryKey('id');
